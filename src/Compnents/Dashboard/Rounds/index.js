@@ -9,7 +9,7 @@ function Rounds() {
                     <Round />
                 </div>
                 <div>
-                    <Round />
+                    <Round disabled={true} />
                 </div>
                 <div>
                     <Round />
