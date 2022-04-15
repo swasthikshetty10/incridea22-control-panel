@@ -2,7 +2,7 @@ import React from 'react'
 
 function Modal() {
     return (
-        <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto">
+        <div class="modal fade fixed z-20 top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable relative w-auto pointer-events-none">
                 <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                     <div class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">

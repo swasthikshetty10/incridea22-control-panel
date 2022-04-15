@@ -2,11 +2,11 @@
 import React from "react";
 
 import Dashboard from './Compnents/Dashboard';
-
+import data from './data'
 function App() {
   return (
 
-    <Dashboard />
+    <Dashboard data={data} />
 
   );
 }
