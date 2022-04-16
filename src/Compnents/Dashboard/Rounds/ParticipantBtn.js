@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import Modal from './Modal'
+import React, { useContext, useState } from 'react'
+import { ModalContext } from '../../../Context/ModalContext'
 
 function ParticipantBtn() {
-    const [modal, setModal] = useState(false)
+    const [modal, showModal] = useContext(ModalContext)
+    const setShowModal = (bool) => {
+        showModal({ ...modal, active: bool })
+    }
+
     return (
-        <div onClo className="bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 p-2 flex justify-between ">
-            <Modal />
-            <div onClick={() => { setModal(true) }} className='pl-3 inline-flex justify-between w-full mr-5 '>
+        <div className="bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 p-2 flex justify-between ">
+
+            <div onClick={() => { setShowModal(true) }} className='pl-3 inline-flex flex-nowrap justify-between w-full mr-5 '>
                 <span>User 1</span>
                 <span>
                     72
