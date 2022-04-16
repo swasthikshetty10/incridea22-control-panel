@@ -5,7 +5,7 @@ export const ModalContext = createContext()
 function ModalContextProvider(props) {
     const [modal, setModal] = useState({
         round: {},
-        pid: [],
+        pids: [],
         active: false
     })
 
