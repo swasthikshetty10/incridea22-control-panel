@@ -7,17 +7,17 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 }
             }
@@ -27,7 +27,7 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
@@ -52,7 +52,7 @@ const data = {
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {
@@ -67,7 +67,7 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
@@ -77,7 +77,7 @@ const data = {
                 },
                 round3: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 }
             }
@@ -87,17 +87,17 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 }
             }
@@ -117,7 +117,7 @@ const data = {
                 },
                 round3: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 }
             }
@@ -147,12 +147,12 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {
@@ -167,12 +167,12 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {
@@ -207,12 +207,12 @@ const data = {
             rounds: {
                 round1: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round2: {
                     j1: { c1: 0, c2: 0, c3: 0 }, j2: { c1: 0, c2: 0, c3: 0 }, j3: { c1: 0, c2: 0, c3: 0 },
-                    selected: false,
+                    selected: true,
                     total: 0
                 },
                 round3: {

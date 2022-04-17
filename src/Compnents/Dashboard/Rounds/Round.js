@@ -10,9 +10,14 @@ function Round({ id, participants, disabled }) {
             <div className='py-3'>
                 <div className=' h-[70vh] tablescroll overflow-y-scroll w-full'>
                     {participants.map((obj, index) => {
-                        const round = Object.values(obj.rounds)[id - 1]
-                        console.log(round)
-                        return <ParticipantBtn pids={obj.pids} round={round} />
+                        const roundArr = Object.values(obj.rounds)
+                        if (id === 1) {
+                            return <ParticipantBtn pids={obj.pids} round={roundArr[id - 1]} />
+                        }
+                        else if (roundArr[id - 2].selected) {
+                            return <ParticipantBtn pids={obj.pids} round={roundArr[id - 1]} />
+                        } else
+                            return <></>
                     }
                     )}
 

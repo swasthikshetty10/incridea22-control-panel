@@ -11,7 +11,7 @@ export default function Modal() {
             {modal.active ? (
                 <>
                     <div
-                        className="justify-center f items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                        className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
                             {/*content*/}
@@ -31,10 +31,62 @@ export default function Modal() {
                                     </button>
                                 </div>
                                 {/*body*/}
-                                <div className="relative p-6 flex-auto">
-                                    <p className="my-4 text-slate-200 text-lg leading-relaxed">
-                                        Pariatur eu consectetur laboris officia enim velit veniam tempor officia magna ullamco pariatur pariatur. Sint adipisicing voluptate et incididunt amet culpa aliqua excepteur labore dolore. Laborum sunt minim exercitation cillum commodo minim aliquip adipisicing mollit est.
-                                    </p>
+                                <div className="relative px-6 py-3 flex-auto">
+                                    <div className="w-full my-3">
+                                        <h3 className="text-lg">Judge name</h3>
+                                        <div className="flex justify-evenly">
+
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full my-3">
+                                        <h3 className="text-lg">Judge name</h3>
+                                        <div className="flex justify-evenly">
+
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full my-3">
+                                        <h3 className="text-lg">Judge name</h3>
+                                        <div className="flex justify-evenly">
+
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
