@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalContext from "./Context/ModalContext";
 import Dashboard from './Compnents/Dashboard';
-import data from './data'
-import {/*Function*/ } from './firebaseConfig';
 import { getEvent } from "./firebaseConfig";
+import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 function App() {
-  // const [data , setData] = useState({});
-  // const getData = async (eventName) => {
-  //   const event = await getEvent(eventName)
-  //   setData(event)
-  // }
-
+  const [data, setData] = useState(null);
+  const getData = async (eventName) => {
+    const event = await getEvent(eventName)
+    setData(event)
+  }
+  useEffect(() => {
+    getData("capture the flag");
+  }, [])
+  console.log(data)
   return (
     <ModalContext>
-      <Dashboard data={data} />
+      {
+        data ?
+          <Dashboard data={data} /> :
+          <div>Loading</div>
+      }
     </ModalContext>
 
   );

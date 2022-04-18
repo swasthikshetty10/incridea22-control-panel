@@ -11,7 +11,7 @@ export default function Modal() {
             {modal.active ? (
                 <>
                     <div
-                        className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                        className="justify-center   items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
                             {/*content*/}
@@ -19,7 +19,7 @@ export default function Modal() {
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     <h3 className="text-3xl font-semibold">
-                                        {modal.pids.toString()}
+                                        {modal.pIds.toString()}
                                     </h3>
                                     <button
                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -38,33 +38,15 @@ export default function Modal() {
 
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="w-full my-3">
-                                        <h3 className="text-lg">Judge name</h3>
-                                        <div className="flex justify-evenly">
-
-                                            <div>
-                                                <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
-                                            </div>
-                                            <div>
-                                                <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
-                                            </div>
-                                            <div>
-                                                <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                         </div>
                                     </div>
@@ -74,15 +56,33 @@ export default function Modal() {
 
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                             <div>
                                                 <p>Criteria 1 </p>
-                                                <input type="number" placeholder="" class="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-full my-3">
+                                        <h3 className="text-lg">Judge name</h3>
+                                        <div className="flex justify-evenly">
+
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
+                                            </div>
+                                            <div>
+                                                <p>Criteria 1 </p>
+                                                <input type="number" placeholder="" className="px-3 py-3 placeholder-slate-300 text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14" />
                                             </div>
                                         </div>
                                     </div>

@@ -13,8 +13,8 @@ function Dashboard({ data }) {
             <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
                 <Users participants={data.participants} />
-                <Rounds participants={data.participants} rounds={data.rounds} />
-                <Winners participants={data.participants} id={data.rounds} />
+                <Rounds participants={data.participants} />
+                <Winners participants={data.participants} />
             </div>
             <Modal />
 
