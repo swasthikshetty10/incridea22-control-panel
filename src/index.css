@@ -13,3 +13,14 @@
   background-color: rgb(79, 70, 229);
   outline: 2px #0000ff;
 }
+
+.numinput::-webkit-outer-spin-button,
+.numinput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.numinput[type="number"] {
+  -moz-appearance: textfield;
+}
