@@ -3,17 +3,18 @@ import ModalContext from "./Context/ModalContext";
 import Dashboard from './Compnents/Dashboard';
 import { getEvent, db } from "./firebaseConfig";
 import {
-  getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot
+  collection, onSnapshot
 } from 'firebase/firestore'
+import Login from "./Compnents/Login";
 function App() {
-  const eventName = "hogathon"
+  const eventName = "capture the flag"
   const [data, setData] = useState(null);
   useEffect(() => {
     const colRef = collection(db, "Events")
     //real time update
     onSnapshot(colRef, (snapshot) => {
       snapshot.docs.forEach((doc) => {
-        if (doc.data().name === "hogathon") {
+        if (doc.data().name === eventName) {
           setData(doc.data())
         }
       })
@@ -29,11 +30,12 @@ function App() {
   // console.log(data)
   return (
     <ModalContext>
-      {
+      {/* {
         data ?
           <Dashboard data={data} /> :
           <div>Loading</div>
-      }
+      } */}
+      <Login />
     </ModalContext>
 
   );

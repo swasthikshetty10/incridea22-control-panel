@@ -7,12 +7,12 @@ import SearchBar from './Utility/SearchBar'
 import Winners from './Winners'
 
 function Dashboard({ data }) {
-    console.log(data)
+    const [query, setQuery] = useState("");
     return (
         <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
             <div className='flex  justify-between items-center '>
                 <h1 className='text-4xl py-5'>Event XYZ</h1>
-                <SearchBar />
+                <SearchBar query={query} setQuery={setQuery} />
             </div>
             <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>

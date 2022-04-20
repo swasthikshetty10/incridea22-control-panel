@@ -6,7 +6,7 @@ function Round({ id, participants, disabled }) {
     const [selected, setSelected] = useState({ roundIdx: id - 1, pIds: new Set() })
     console.log(selected)
     const handleSave = () => {
-        select("hogathon", selected.pIds, selected.roundIdx)
+        select("capture the flag", selected.pIds, selected.roundIdx)
     }
     return (
         <div key={id} className={`${disabled && "opacity-50"} relative   w-full  text-center   border-opacity-40 border-gray-300 border-r-2 `}>
