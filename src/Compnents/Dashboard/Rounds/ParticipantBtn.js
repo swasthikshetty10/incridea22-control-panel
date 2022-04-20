@@ -1,8 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import Rounds from '.'
 import { ModalContext } from '../../../Context/ModalContext'
 
-function ParticipantBtn({ pIds, round }) {
+function ParticipantBtn({ selected, setSelected, pIds, round }) {
     const [modal, showModal] = useContext(ModalContext)
+    useEffect(() => {
+        if (round.selected) {
+            setSelected((prev) => ({ ...prev, pIds: new Set([...prev.pIds, JSON.stringify(pIds)]) }))
+        }
+    }, [])
+
     const setShowModal = (bool) => {
         showModal({ pIds, round, active: bool })
     }
@@ -20,7 +27,18 @@ function ParticipantBtn({ pIds, round }) {
                 )}
             </div>
             <div className='h-full py-2'>
-                <input className="form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault"></input>
+                <input
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setSelected((prev) => ({ ...prev, pIds: new Set([...prev.pIds, JSON.stringify(pIds)]) }))
+                        } else {
+                            const new_pIds = new Set([...selected.pIds])
+                            new_pIds.delete(JSON.stringify(pIds))
+                            setSelected((prev) => ({ ...prev, pIds: new_pIds }))
+                        }
+                    }}
+                    checked={selected.pIds.has(JSON.stringify(pIds))}
+                    className="form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault"></input>
             </div>
         </div >
     )

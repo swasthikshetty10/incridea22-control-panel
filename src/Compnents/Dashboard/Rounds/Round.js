@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ParticipantBtn from './ParticipantBtn'
 
 function Round({ id, participants, disabled }) {
-
+    const [selected, setSelected] = useState({ roundIdx: id - 1, pIds: new Set() })
+    console.log(selected)
     return (
         <div key={id} className={`${disabled && "opacity-50"} relative   w-full  text-center   border-opacity-40 border-gray-300 border-r-2 `}>
             <h2 className='font-semibold border-b-2 p-2 border-opacity-40 border-gray-300  sm:p-4 text-2xl'>Round {id}</h2>
@@ -11,10 +12,10 @@ function Round({ id, participants, disabled }) {
                 <div className=' h-[70vh] tablescroll overflow-y-scroll w-full'>
                     {participants.map((obj, i) => {
                         if (id === 1) {
-                            return <ParticipantBtn key={i} pIds={obj.pIds} round={obj.rounds[id - 1]} />
+                            return <ParticipantBtn selected={selected} setSelected={setSelected} key={i} pIds={obj.pIds} round={obj.rounds[id - 1]} />
                         }
                         else if (obj.rounds[id - 2].selected) {
-                            return <ParticipantBtn key={i} pIds={obj.pIds} round={obj.rounds[id - 1]} />
+                            return <ParticipantBtn selected={selected} setSelected={setSelected} key={i} pIds={obj.pIds} round={obj.rounds[id - 1]} />
                         } else
                             return < ></>
                     }
