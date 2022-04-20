@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import {
-    getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc
+    getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -13,10 +13,11 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export async function getEvent(eventName) {
     const events = [];
+
     const collRef = collection(db, 'Events')
     const q = query(collRef, where('name', '==', eventName))
     const eventRef = await getDocs(q);
@@ -80,9 +81,6 @@ export async function select(eventName, set, roundIndex) {
     for (let participant of participants) {
         if (set.has(JSON.stringify(participant.pIds))) {
             participant.rounds[roundIndex].selected = true
-        }
-        else {
-            participant.rounds[roundIndex].selected = false
         }
 
     }

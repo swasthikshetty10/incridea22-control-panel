@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import { select } from '../../../firebaseConfig'
 import ParticipantBtn from './ParticipantBtn'
 
 function Round({ id, participants, disabled }) {
     const [selected, setSelected] = useState({ roundIdx: id - 1, pIds: new Set() })
     console.log(selected)
+    const handleSave = () => {
+        select("hogathon", selected.pIds, selected.roundIdx)
+    }
     return (
         <div key={id} className={`${disabled && "opacity-50"} relative   w-full  text-center   border-opacity-40 border-gray-300 border-r-2 `}>
             <h2 className='font-semibold border-b-2 p-2 border-opacity-40 border-gray-300  sm:p-4 text-2xl'>Round {id}</h2>
@@ -27,6 +31,7 @@ function Round({ id, participants, disabled }) {
 
                 <button
                     className="bg-emerald-500 text-white hover:bg-emerald-600 active:bg-emerald-700 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                    onClick={handleSave}
                 > save</button>
                 <button
                     className="bg-emerald-500 text-white hover:bg-emerald-600 active:bg-emerald-700 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"

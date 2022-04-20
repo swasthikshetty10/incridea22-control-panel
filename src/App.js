@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
 import ModalContext from "./Context/ModalContext";
 import Dashboard from './Compnents/Dashboard';
-import { getEvent } from "./firebaseConfig";
-import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
+import { getEvent, db } from "./firebaseConfig";
+import {
+  getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot
+} from 'firebase/firestore'
 function App() {
+  const eventName = "hogathon"
   const [data, setData] = useState(null);
-  const getData = async (eventName) => {
-    const event = await getEvent(eventName)
-    setData(event)
-  }
   useEffect(() => {
-    getData("hogathon");
+    const colRef = collection(db, "Events")
+    //real time update
+    onSnapshot(colRef, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        if (doc.data().name === "hogathon") {
+          setData(doc.data())
+        }
+      })
+    })
   }, [])
-  console.log(data)
+  // const getData = async (eventName) => {
+  //   const event = await getEvent(eventName)
+  //   setData(event)
+  // }
+  // useEffect(() => {
+  //   getData("hogathon");
+  // }, [])
+  // console.log(data)
   return (
     <ModalContext>
       {
