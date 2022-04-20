@@ -60,9 +60,6 @@ export async function updateRound(eventName, pIds, roundIndex, roundObj) {
 }
 
 export async function select(eventName, set, roundIndex) {
-    if (!set.size) {
-        throw new Error('No Participants selected');
-    }
     const collRef = collection(db, 'Events')
     const q = query(collRef, where('name', '==', eventName))
     const events = []
@@ -81,6 +78,9 @@ export async function select(eventName, set, roundIndex) {
     for (let participant of participants) {
         if (set.has(JSON.stringify(participant.pIds))) {
             participant.rounds[roundIndex].selected = true
+        }
+        else {
+            participant.rounds[roundIndex].selected = false
         }
 
     }
