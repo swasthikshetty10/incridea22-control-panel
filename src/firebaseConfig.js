@@ -59,7 +59,7 @@ export async function updateRound(eventName, pIds, roundIndex, roundObj) {
 }
 
 export async function select(eventName, set, roundIndex) {
-    if (!set.length) {
+    if (!set.size) {
         throw new Error('No Participants selected');
     }
     const collRef = collection(db, 'Events')
