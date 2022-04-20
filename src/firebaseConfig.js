@@ -81,6 +81,9 @@ export async function select(eventName, set, roundIndex) {
         if (set.has(JSON.stringify(participant.pIds))) {
             participant.rounds[roundIndex].selected = true
         }
+        else {
+            participant.rounds[roundIndex].selected = false
+        }
 
     }
     event.participants = participants
