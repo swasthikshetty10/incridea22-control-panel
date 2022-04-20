@@ -10,7 +10,7 @@ function App() {
     setData(event)
   }
   useEffect(() => {
-    getData("capture the flag");
+    getData("hogathon");
   }, [])
   console.log(data)
   return (
