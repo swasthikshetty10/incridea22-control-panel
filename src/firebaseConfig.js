@@ -58,11 +58,10 @@ export async function updateRound(eventName, pIds, roundIndex, roundObj) {
     await updateDoc(docRef, event)
 }
 
-export async function select(eventName, setArrs, roundIndex) {
-    if (!setArrs.length) {
+export async function select(eventName, set, roundIndex) {
+    if (!set.size) {
         throw new Error('No Participants selected');
     }
-    const set = new Set(setArrs)
     const collRef = collection(db, 'Events')
     const q = query(collRef, where('name', '==', eventName))
     const events = []
