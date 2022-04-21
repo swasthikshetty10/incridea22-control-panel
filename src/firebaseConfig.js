@@ -91,5 +91,33 @@ export async function select(eventName, set, roundIndex) {
 
 }   //Not considering invalid array sent (for now)   
 
-//const setArrs = arrs.map((arr) => { return JSON.stringify(arr) }) where arrs is the array of Pids of selected participants
+const auth = getAuth(app)
 
+async function createOrganiser(organiser) {
+    const orgColRef = collection(db, 'Organisers')
+    const { email, password } = organiser
+    const userCred = await createUserWithEmailAndPassword(auth, email, password)
+    delete organiser.password
+    organiser.uid = userCred.user.uid
+    await addDoc(orgColRef, organiser)
+}
+
+async function loginOrganiser(email, password) {
+    const orgColRef = collection(db, 'Organisers')
+    const organisers = []
+    const userCred = await signInWithEmailAndPassword(auth, email, password)
+    const q = query(orgColRef, where('uid', '==', userCred.user.uid))
+    const orgRef = await getDocs(q)
+    orgRef.forEach((organiser) => {
+        organisers.push({ ...organiser.data(), id: organiser.id })
+    })
+    return organisers[0]
+}
+
+// const organiser = {
+//     email,
+//     password,
+//     name,
+//     role, 
+//     event name /*Optional*/
+// }
