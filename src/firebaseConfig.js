@@ -15,7 +15,7 @@ const firebaseConfig = {
     appId: "1:599759960850:web:0c378639e025467c15d1cb"
 }
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 export async function getEvent(eventName) {
@@ -94,7 +94,7 @@ export async function select(eventName, set, roundIndex) {
 
 }   //Not considering invalid array sent (for now)   
 
-const auth = getAuth(app)
+export const auth = getAuth(app)
 
 async function createOrganiser(organiser) {
     const orgColRef = collection(db, 'Organisers')
@@ -105,7 +105,7 @@ async function createOrganiser(organiser) {
     await addDoc(orgColRef, organiser)
 }
 
-async function loginOrganiser(email, password) {
+export async function loginOrganiser(email, password) {
     const orgColRef = collection(db, 'Organisers')
     const organisers = []
     const userCred = await signInWithEmailAndPassword(auth, email, password)
@@ -114,7 +114,7 @@ async function loginOrganiser(email, password) {
     orgRef.forEach((organiser) => {
         organisers.push({ ...organiser.data(), id: organiser.id })
     })
-    return organisers[0]
+    return { user: userCred, organiser: organisers[0] }
 }
 
 // const organiser = {

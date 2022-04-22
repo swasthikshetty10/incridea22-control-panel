@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { auth } from '../../firebaseConfig'
 import Rounds from './Rounds'
 import Modal from './Rounds/Modal'
 import Users from './Users'
@@ -13,6 +13,7 @@ function Dashboard({ data }) {
             <div className='flex  justify-between items-center '>
                 <h1 className='text-4xl py-5'>Event XYZ</h1>
                 <SearchBar query={query} setQuery={setQuery} />
+                <button onClick={() => auth.signOut()}>Sign out</button>
             </div>
             <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>

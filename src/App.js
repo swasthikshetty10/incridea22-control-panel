@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ModalContext from "./Context/ModalContext";
 import Dashboard from './Compnents/Dashboard';
 import { getEvent, db } from "./firebaseConfig";
+import { AuthProvider } from "./Context/AuthContext";
+import { BrowserRouter } from 'react-router-dom';
 import {
   collection, onSnapshot
 } from 'firebase/firestore'
@@ -29,15 +31,19 @@ function App() {
   // }, [])
   // console.log(data)
   return (
-    <ModalContext>
-      {/* {
-        data ?
-          <Dashboard data={data} /> :
-          <div>Loading</div>
-      } */}
-      <Login />
-    </ModalContext>
+    <BrowserRouter>
+      <AuthProvider>
+        <ModalContext>
 
+          {/* {
+        data ?
+        <Dashboard data={data} /> :
+        <div>Loading</div>
+      } */}
+          <Login />
+        </ModalContext>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
