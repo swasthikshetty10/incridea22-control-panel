@@ -104,16 +104,21 @@ async function createOrganiser(organiser) {
 }
 
 async function loginOrganiser(email, password) {
+    const userCred = await signInWithEmailAndPassword(auth, email, password)
+    return userCred.user
+}
+
+async function getOrganiser(uid) {
     const orgColRef = collection(db, 'Organisers')
     const organisers = []
-    const userCred = await signInWithEmailAndPassword(auth, email, password)
-    const q = query(orgColRef, where('uid', '==', userCred.user.uid))
-    const orgRef = await getDocs(q)
-    orgRef.forEach((organiser) => {
+    const q = query(orgColRef, where('uid', '==', uid))
+    const organiserRef = await getDocs(q)
+    organiserRef.forEach((organiser) => {
         organisers.push({ ...organiser.data(), id: organiser.id })
     })
     return organisers[0]
 }
+
 
 // const organiser = {
 //     email,
