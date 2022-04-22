@@ -7,6 +7,7 @@ import { getOrganiser } from '../../firebaseConfig'
 function Events() {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
+    console.log(userCtx)
     useEffect(() => {
 
         getOrganiser(userCtx.currentUser.uid).then(
@@ -17,7 +18,6 @@ function Events() {
         )
 
     }, [])
-    console.log(userCtx)
     const navigate = useNavigate()
     return (
         <div className='min-h-screen bg-gray-700 text-white pt-3'  >
@@ -28,11 +28,11 @@ function Events() {
                 {
                     !loading &&
                     userCtx.currentOrganizer.eventIds.map((ele, key) => {
-
-                        return <Link to={`/dashboard/${ele}`}>
+                        console.log(ele)
+                        return <Link to={`/dashboard/${ele.Id}`}>
                             <div key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
                                 <span>
-                                    {ele}
+                                    {ele.name}
                                 </span>
                             </div>
                         </Link>
