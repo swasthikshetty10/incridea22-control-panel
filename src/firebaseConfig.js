@@ -109,12 +109,13 @@ export async function loginOrganiser(email, password) {
     const orgColRef = collection(db, 'Organisers')
     const organisers = []
     const userCred = await signInWithEmailAndPassword(auth, email, password)
+    console.log(userCred)
     const q = query(orgColRef, where('uid', '==', userCred.user.uid))
     const orgRef = await getDocs(q)
     orgRef.forEach((organiser) => {
         organisers.push({ ...organiser.data(), id: organiser.id })
     })
-    return { user: userCred, organiser: organisers[0] }
+    return organisers[0]
 }
 
 // const organiser = {

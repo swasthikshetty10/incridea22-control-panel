@@ -7,6 +7,7 @@ function SignIn({ providers }) {
     const errorDisplay = useRef(null)
     const initialFormData = Object.freeze({ email: '', password: '', });
     const [formData, updateFormData] = useState(initialFormData);
+    const userCtx = useContext(AuthContext)
     const handleChange = (e) => {
         updateFormData({
             ...formData, [e.target.name]: e.target.value.trim(),
@@ -16,11 +17,14 @@ function SignIn({ providers }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await loginOrganiser(formData.email, formData.password);
-        console.log(res)
+        userCtx.setOrganizer(res)
     };
-    const { currentUser } = useContext(AuthContext)
-    console.log(currentUser)
-
+    console.log(userCtx)
+    useEffect(() => {
+        if (userCtx.currentUser) {
+            navigate("/events")
+        }
+    })
     return (
         <div>
             <div className="bg-gray-800 r min-h-screen flex flex-col text-white">

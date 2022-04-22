@@ -4,8 +4,8 @@ export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+    const [currentOrganizer, setOrganizer] = useState(null)
     const [pending, setPending] = useState(true);
-
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             setCurrentUser(user)
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
-                currentUser
+                currentUser, currentOrganizer, setOrganizer
             }}
         >
             {children}

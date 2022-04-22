@@ -3,11 +3,17 @@ import ModalContext from "./Context/ModalContext";
 import Dashboard from './Compnents/Dashboard';
 import { getEvent, db } from "./firebaseConfig";
 import { AuthProvider } from "./Context/AuthContext";
-import { BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 import {
   collection, onSnapshot
 } from 'firebase/firestore'
 import Login from "./Compnents/Login";
+import Events from "./Compnents/Events";
 function App() {
   const eventName = "capture the flag"
   const [data, setData] = useState(null);
@@ -31,7 +37,7 @@ function App() {
   // }, [])
   // console.log(data)
   return (
-    <BrowserRouter>
+    <Router>
       <AuthProvider>
         <ModalContext>
 
@@ -40,10 +46,18 @@ function App() {
         <Dashboard data={data} /> :
         <div>Loading</div>
       } */}
-          <Login />
+          <Routes>
+            <Route path="/events" element={<Events />} />
+
+            <Route path="/dashboard" element={data ?
+              <Dashboard data={data} /> :
+              <div>Loading</div>
+            } />
+            <Route path="/" element={<Login />} />
+          </Routes>
         </ModalContext>
       </AuthProvider>
-    </BrowserRouter>
+    </Router>
   );
 }
 
