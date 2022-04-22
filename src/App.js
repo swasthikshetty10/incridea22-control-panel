@@ -49,7 +49,7 @@ function App() {
           <Routes>
             <Route path="/events" element={<Events />} />
 
-            <Route path="/dashboard" element={data ?
+            <Route path="/dashboard:id" element={data ?
               <Dashboard data={data} /> :
               <div>Loading</div>
             } />

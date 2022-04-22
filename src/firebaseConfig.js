@@ -94,7 +94,18 @@ export async function select(eventName, set, roundIndex) {
 
 }   //Not considering invalid array sent (for now)   
 
+
 export const auth = getAuth(app)
+
+export async function getAllEvents() {
+    const eventColRef = collection(db, 'Events')
+    const events = []
+    const eventsRef = await getDocs(eventColRef)
+    eventsRef.forEach((event) => {
+        events.push({ name: event.data().name, id: event.id })
+    })
+    return events
+}
 
 export async function createOrganiser(organiser) {
     const orgColRef = collection(db, 'Organisers')
