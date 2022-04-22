@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthContext';
-import { loginOrganiser } from '../../firebaseConfig';
+import { getOrganiser, loginOrganiser } from '../../firebaseConfig';
 
 function SignIn({ providers }) {
     const errorDisplay = useRef(null)
@@ -17,7 +17,10 @@ function SignIn({ providers }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await loginOrganiser(formData.email, formData.password);
-        userCtx.setOrganizer(res)
+        getOrganiser(res.uid).then(data => {
+            userCtx.setOrganizer()
+        })
+
     };
     console.log(userCtx)
     useEffect(() => {
@@ -31,8 +34,6 @@ function SignIn({ providers }) {
                 <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                     <form onSubmit={handleSubmit} className=" px-6 py-8 bg-black bg-opacity-20 backdrop-blur-lg rounded shadow-md w-full">
                         <h1 className="mb-8 text-3xl font-semibold text-center">Log In</h1>
-
-
                         <input
                             type="email"
                             className="block border dark:text-black  focus:outline-none border-gray-light focus:border-green-500 w-full p-3 rounded mb-4"

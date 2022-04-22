@@ -96,7 +96,7 @@ export async function select(eventName, set, roundIndex) {
 
 export const auth = getAuth(app)
 
-async function createOrganiser(organiser) {
+export async function createOrganiser(organiser) {
     const orgColRef = collection(db, 'Organisers')
     const { email, password } = organiser
     const userCred = await createUserWithEmailAndPassword(auth, email, password)
@@ -106,17 +106,22 @@ async function createOrganiser(organiser) {
 }
 
 export async function loginOrganiser(email, password) {
+    const userCred = await signInWithEmailAndPassword(auth, email, password)
+    return userCred.user
+}
+
+export async function getOrganiser(uid) {
     const orgColRef = collection(db, 'Organisers')
     const organisers = []
-    const userCred = await signInWithEmailAndPassword(auth, email, password)
-    console.log(userCred)
-    const q = query(orgColRef, where('uid', '==', userCred.user.uid))
-    const orgRef = await getDocs(q)
-    orgRef.forEach((organiser) => {
+    const q = query(orgColRef, where('uid', '==', uid))
+    const organiserRef = await getDocs(q)
+    organiserRef.forEach((organiser) => {
+
         organisers.push({ ...organiser.data(), id: organiser.id })
     })
     return organisers[0]
 }
+
 
 // const organiser = {
 //     email,
@@ -125,3 +130,5 @@ export async function loginOrganiser(email, password) {
 //     role, 
 //     event name /*Optional*/
 // }
+
+//TODO: REFACTOR UPDATE ROUND AND SELECT TO USE ID
