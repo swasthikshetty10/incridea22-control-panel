@@ -3,7 +3,7 @@ import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
 import Rounds from './Rounds'
 import Modal from './Rounds/Modal'
 import Users from './Users'
-import SearchBar from './Utility/SearchBar'
+import SearchBar from '../../Utility/SearchBar'
 import Winners from './Winners'
 import {
     collection, onSnapshot
