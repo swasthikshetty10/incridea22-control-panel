@@ -14,7 +14,7 @@ const Input = (props) => {
       {...props}
       type="number"
       placeholder="Enter Score"
-      className="px-3 py-3 placeholder-slate-300 numinput text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14"
+      className={"px-3 py-3 placeholder-slate-300 numinput text-slate-700 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring  w-14 " + `${props.className}`}
     />
   );
 };

@@ -63,7 +63,7 @@ function Dashboard(props) {
                 </div>
                 <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
-                    <ScoreSheet criteria={criteria} participants={data.participants} round={2} />
+                    <ScoreSheet criteria={criteria} participants={data.participants} rounds={data.rounds} round={1} />
                     {/* <Rounds participants={data.participants} />
                     <Winners participants={data.participants} /> */}
                 </div>
