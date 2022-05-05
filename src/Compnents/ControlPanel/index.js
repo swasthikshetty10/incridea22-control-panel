@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
-import Users from './Users'
+import ScoreSheet from './ScoreSheet'
 import SearchBar from './Utility/SearchBar'
 import {
     collection, onSnapshot
@@ -16,6 +16,19 @@ function Dashboard(props) {
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id } = useParams()
+    const [criteria, setCriteria] = useState([
+        {
+            name: "Criteria-1",
+            value: 0
+        },
+        {
+            name: "Criteria-2",
+            value: 0
+        }, {
+            name: "Criteria-3",
+            value: 0
+        }
+    ])
     console.log(userCtx)
     useEffect(() => {
         const colRef = collection(db, "Events")
@@ -44,13 +57,13 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
                 <div className='flex  justify-between items-center '>
-                    <h1 className='text-4xl py-5'>Event XYZ</h1>
+                    <h1 className='text-4xl py-5 capitalize '>{data.name}</h1>
                     <SearchBar query={query} setQuery={setQuery} />
                     <button onClick={() => auth.signOut()}>Sign out</button>
                 </div>
                 <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
-                    <Users participants={data.participants} />
+                    <ScoreSheet criteria={criteria} participants={data.participants} round={2} />
                     {/* <Rounds participants={data.participants} />
                     <Winners participants={data.participants} /> */}
                 </div>
