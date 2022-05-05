@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { auth, getOrganiser } from '../../firebaseConfig'
+import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
 import Rounds from './Rounds'
 import Modal from './Rounds/Modal'
 import Users from './Users'
@@ -24,7 +24,7 @@ function Dashboard(props) {
         const colRef = collection(db, "Events")
         //real time update
         if (userCtx) {
-            getOrganiser(userCtx.currentUser.uid).then(
+            getEvent(id).then(
                 (res) => {
                     userCtx.setOrganizer(res)
                     console.log(res)
