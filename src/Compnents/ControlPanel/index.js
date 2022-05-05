@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
 import ScoreSheet from './ScoreSheet'
-import SearchBar from './Utility/SearchBar'
+import SearchBar from '../../Utility/SearchBar'
 import {
     collection, onSnapshot
 } from 'firebase/firestore'
