@@ -18,11 +18,11 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-export async function getEvent(eventName) {
+export async function getEvent(id) {
     const events = [];
 
     const collRef = collection(db, 'Events')
-    const q = query(collRef, where('name', '==', eventName))
+    const q = query(collRef, where('id', '==', id))
     const eventRef = await getDocs(q);
     eventRef.forEach((event) => {
         events.push({ ...event.data(), id: event.id })
@@ -31,6 +31,17 @@ export async function getEvent(eventName) {
         throw new Error("No such event")
     }
     return events[0]
+}
+
+export async function getEvents(uid) {
+    const collRef = collection(db, 'Events')
+    const q = query(collRef, where(`roles.${uid}`, "==", "judge"))
+    const querySnaphshot = await getDocs(q)
+    const data = []
+    querySnaphshot.forEach((event) => {
+        data.push({ ...event.data(), id: event.id })
+    })
+    return data
 }
 
 export async function updateRound(eventName, pIds, roundIndex, roundObj) {
@@ -138,7 +149,7 @@ export async function getOrganiser(uid) {
 //     email,
 //     password,
 //     name,
-//     role, 
+//     role,
 //     event name /*Optional*/
 // }
 
