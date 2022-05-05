@@ -11,6 +11,7 @@ import {
 import { getOrganiser } from "./firebaseConfig";
 import Login from "./Compnents/Login";
 import Events from "./Compnents/Events";
+import ControlPanel from './Compnents/ControlPanel'
 function App() {
   const userCtx = useContext(AuthContext)
   useEffect(() => {
@@ -31,7 +32,7 @@ function App() {
           <Routes>
             <Route path="/events" element={<Events />} />
             <Route path="/dashboard/:id" element={
-              <Dashboard />
+              <ControlPanel />
             } />
             <Route path="/" element={<Login />} />
           </Routes>
