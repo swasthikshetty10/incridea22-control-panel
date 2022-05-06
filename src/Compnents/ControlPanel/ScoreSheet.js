@@ -38,10 +38,11 @@ function Users({ participants, round, rounds, id, uid }) {
             scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
             event.participants[pIndex].rounds[rIndex].scores = scores
         } else {
+            const criteria = rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0)
             const obj = {
                 uid,
-                criteria: rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0),
-                total: this.criteria.reduce((a, b) => a + b, 0)
+                criteria,
+                total: criteria.reduce((a, b) => a + b, 0)
             }
             scores.push(obj)
             console.log(scores)
@@ -100,16 +101,18 @@ function Users({ participants, round, rounds, id, uid }) {
                                             } inputMode='numeric' value={
                                                 (() => {
                                                     if (participants[index].rounds[round - 1].scores) {
-
                                                         let score = 0
-                                                        participants[index].rounds[round - 1].scores.forEach((ele, i) => {
-                                                            if (ele.uid === uid) {
-                                                                score = participants[index].rounds[round - 1].scores[i].criteria[ix]
-                                                            }
+                                                        if (participants[index].rounds[round - 1].scores.length > 0) {
+                                                            participants[index].rounds[round - 1].scores.forEach((ele, i) => {
+                                                                if (ele.uid === uid) {
+                                                                    score = participants[index].rounds[round - 1].scores[i].criteria[ix]
+                                                                }
 
-                                                        })
-                                                        return score
+                                                            })
+                                                            return score
+                                                        }
                                                     }
+
                                                 })()
                                             } min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
                                         </div>)
