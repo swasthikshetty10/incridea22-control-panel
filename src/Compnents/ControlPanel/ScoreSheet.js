@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { addCriteria, db } from '../../firebaseConfig'
 import AddBtn from '../../Utility/AddBtn'
 import Input from '../../Utility/Input'
+import { TiDelete } from 'react-icons/ti'
+import Modal from '../../Utility/Modal'
 function Users({ participants, round, rounds, id, uid }) {
     console.log(participants)
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
@@ -13,6 +15,15 @@ function Users({ participants, round, rounds, id, uid }) {
             return ele.rounds[round - 2].selected
         }
     }))
+    const [modal, setModal] = useState(false)
+    const [checkbox, setCheckbox] = useState(false)
+    const deleteCriteria = async (id, rIndex) => {
+        const docRef = doc(db, 'Events', id)
+        const eventDoc = await getDoc(docRef)
+        const event = { ...eventDoc.data() }
+        event.rounds[rIndex].criteria.pop()
+        await updateDoc(docRef, event)
+    }
     const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
         console.log(id, pIndex, rIndex, uid, cIndex, score)
         const docRef = doc(db, 'Events', id)
@@ -39,7 +50,7 @@ function Users({ participants, round, rounds, id, uid }) {
         await updateDoc(docRef, event)
     }
     return (
-        <div className='h-full text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
+        <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
             <div className='py-3'>
                 <div className='h-[77vh] tablescroll  overflow-y-scroll  w-full'>
                     {
@@ -55,8 +66,10 @@ function Users({ participants, round, rounds, id, uid }) {
                                     {
                                         rounds[round - 1].criteria.map((name, ix) =>
 
-                                            <div key={ix} className='whitespace-nowrap md:basis-1/7 p-3 text-center'>
-                                                <span>Criteria {ix + 1}</span>
+                                            <div key={ix} className='whitespace-nowrap md:basis-1/7 p-3 group text-center'>
+                                                {
+                                                    rounds[round - 1].criteria.length - 1 === ix ? <div className='flex gap-[2px]   items-center cursor-pointer '><span >Criteria {ix + 1}</span><button onClick={() => { setModal(true) }} className='hidden group-hover:block transformease-linear duration-400 text-red-600 text-xl'><TiDelete /></button></div> : <span>Criteria {ix + 1} </span>
+                                                }
                                             </div>)
                                     }
                                     <div className='md:basis-1/7 inline-flex gap-2 p-3 text-center'>
@@ -87,6 +100,7 @@ function Users({ participants, round, rounds, id, uid }) {
                                             } inputMode='numeric' value={
                                                 (() => {
                                                     if (participants[index].rounds[round - 1].scores) {
+
                                                         let score = 0
                                                         participants[index].rounds[round - 1].scores.forEach((ele, i) => {
                                                             if (ele.uid === uid) {
@@ -100,7 +114,7 @@ function Users({ participants, round, rounds, id, uid }) {
                                             } min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
                                         </div>)
                                 }
-                                <div className='inline-flex mr-3 gap-2 w-full  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 justify-center items-center py-4 '>
+                                <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-2 w-full  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
                                     <span>{
                                         (() => {
                                             try {
@@ -118,7 +132,7 @@ function Users({ participants, round, rounds, id, uid }) {
 
                                         })()
                                     }</span>
-                                    <CheckBox />
+                                    <CheckBox disabled={!checkbox} />
                                 </div>
 
                             </div>
@@ -128,14 +142,16 @@ function Users({ participants, round, rounds, id, uid }) {
                 </div>
             </div>
             <div className='flex justify-end gap-5 mb-3 mr-3'>
-                <button className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                <button onClick={() => { setCheckbox(!checkbox) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                     Save
                 </button>
                 <button className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                     Submit
                 </button>
             </div>
+            <Modal set={modal} onDelete={() => { deleteCriteria(id, round - 1); setModal(false) }} onClose={() => { setModal(false) }} />
         </div>
+
     )
 }
 
@@ -143,7 +159,8 @@ function CheckBox(props) {
     return (
         <input
             {...props}
-            className="form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault"></input>
+            type={"checkbox"}
+            className={`${props.disabled ? "hidden" : ""} form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transformduration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault`}></input>
     )
 }
 
