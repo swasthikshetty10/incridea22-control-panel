@@ -5,6 +5,8 @@ import AddBtn from '../../Utility/AddBtn'
 import Input from '../../Utility/Input'
 import { TiDelete } from 'react-icons/ti'
 import Modal from '../../Utility/Modal'
+import SubmitModal from '../../Utility/SubmitModal'
+import { async } from '@firebase/util'
 function Users({ participants, round, rounds, id, uid }) {
     console.log(participants)
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
@@ -17,12 +19,20 @@ function Users({ participants, round, rounds, id, uid }) {
 
     }))
     const [modal, setModal] = useState(false)
+    const [submit, setSubmit] = useState(false)
     const [checkbox, setCheckbox] = useState(false)
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.participants[pIndex].rounds[rIndex].selected = value
+        await updateDoc(docRef, event)
+    }
+    const submitRound = async (id, rIndex) => {
+        const docRef = doc(db, 'Events', id)
+        const eventDoc = await getDoc(docRef)
+        const event = { ...eventDoc.data() }
+        event.rounds[rIndex].completed = true
         await updateDoc(docRef, event)
     }
     const deleteCriteria = async (id, rIndex) => {
@@ -61,11 +71,11 @@ function Users({ participants, round, rounds, id, uid }) {
     return (
         <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
             <div className='py-3'>
-                <div className='h-[77vh] tablescroll  overflow-y-scroll  w-full'>
+                <div className={`${rounds[round - 1].completed && 'opacity-50'} h-[77vh] tablescroll   overflow-y-scroll  w-full`}>
                     {
                         roundParticipants.map((obj, index) => <>
                             {
-                                index == 0 && <div className="flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5" key={index}>
+                                index == 0 && <div className={`${rounds[round - 1].completed && 'pointer-events-none'} flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={index}>
                                     <div className="md:basis-1/4  transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
 
                                         <div className='text-2xl font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
@@ -88,7 +98,7 @@ function Users({ participants, round, rounds, id, uid }) {
                                 </div>
                             }
 
-                            <div className="flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5" key={index}>
+                            <div className={`${rounds[round - 1].completed && 'pointer-events-none '} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={index}>
                                 <div className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                     <div className='flex-col gap-3 w-full  '>
                                         {obj.pIds.map((pid, index) => <div key={index} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
@@ -145,21 +155,29 @@ function Users({ participants, round, rounds, id, uid }) {
                                     }</span>
                                     <CheckBox onChange={() => { console.log("Clickkkk"); selectParticipant(id, index, round - 1, !participants[index].rounds[round - 1].selected) }} checked={participants[index].rounds[round - 1].selected} disabled={!checkbox} />
                                 </div>
-
                             </div>
                         </>
 
                         )}
                 </div>
             </div>
-            <div className='flex justify-end gap-5 mb-3 mr-3'>
-                <button onClick={() => { setCheckbox(!checkbox) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
-                    Save
-                </button>
-                <button className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
-                    Submit
-                </button>
-            </div>
+            {
+                !rounds[round - 1].completed ?
+                    <div className='flex justify-end gap-5 mb-3 mr-3'>
+                        <button onClick={() => { setCheckbox(!checkbox) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                            Save
+                        </button>
+                        <button onClick={() => { submitRound(id, round - 1); setSubmit(true) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                            Submit
+                        </button>
+                    </div> : <div className='flex  justify-end gap-5 mb-3 mr-3'>
+                        <button className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                            Go Back
+                        </button>
+
+                    </div>
+            }
+            <SubmitModal set={submit} onSubmit={() => { setSubmit(false) }} onClose={() => { setSubmit(false) }} />
             <Modal set={modal} onDelete={() => { deleteCriteria(id, round - 1); setModal(false) }} onClose={() => { setModal(false) }} />
         </div>
 
