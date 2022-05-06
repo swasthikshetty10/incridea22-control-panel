@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { connectFirestoreEmulator, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { addCriteria, db } from '../../firebaseConfig'
 import AddBtn from '../../Utility/AddBtn'
@@ -22,7 +22,8 @@ function Users({ participants, round, rounds, id, uid }) {
         if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
             const judgeIndex = participants[pIndex].rounds[rIndex].scores.findIndex(ele => ele.uid === uid)
             console.log(judgeIndex)
-            scores[judgeIndex] = { ...scores[judgeIndex], criteria: scores[judgeIndex].criteria.map((val, ix) => ix === cIndex ? parseInt(score) : val) }
+            const len = scores[judgeIndex].criteria.length
+            scores[judgeIndex] = { ...scores[judgeIndex], criteria: rounds[round - 1].criteria.map((_, ix) => ix === cIndex ? parseInt(score) : (len > ix ? scores[judgeIndex].criteria[ix] : 0)) }
             scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
             event.participants[pIndex].rounds[rIndex].scores = scores
         } else {
@@ -82,11 +83,27 @@ function Users({ participants, round, rounds, id, uid }) {
                                                     updateScore(id, index, round - 1, uid, ix, e.target.value)
                                                 }
 
-                                            } inputmode='numeric' min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
+                                            } inputMode='numeric' min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
                                         </div>)
                                 }
                                 <div className='inline-flex gap-2  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-4 flex'>
-                                    <span>10</span>
+                                    <span>{
+                                        (() => {
+                                            try {
+                                                let total = 0;
+                                                participants[index].rounds[round - 1].scores.forEach(ele => {
+                                                    if (ele.uid === uid) {
+                                                        total = ele.total
+                                                        return
+                                                    }
+                                                });
+                                                return total
+                                            } catch {
+                                                return 0
+                                            }
+
+                                        })()
+                                    }</span>
                                     <CheckBox />
                                 </div>
 
