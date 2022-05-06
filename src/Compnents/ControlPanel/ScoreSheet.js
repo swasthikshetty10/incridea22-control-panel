@@ -48,19 +48,20 @@ function Users({ participants, round, rounds, id, uid }) {
                                 index == 0 && <div className="flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5" key={index}>
                                     <div className="md:basis-1/4  transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
 
-                                        <div className='text-2xl font-semibold  px-5 bg-opacity-20  my-1 justify-between w-full '>
+                                        <div className='text-2xl font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
                                             Participant
                                         </div>
                                     </div>
                                     {
                                         rounds[round - 1].criteria.map((name, ix) =>
 
-                                            <div key={ix} className='md:basis-1/7 p-3 text-center'>
-                                                <span>{name}</span>
+                                            <div key={ix} className='whitespace-nowrap md:basis-1/7 p-3 text-center'>
+                                                <span>Criteria {ix + 1}</span>
                                             </div>)
                                     }
-                                    <div className='md:basis-1/7 p-3 text-center'>
+                                    <div className='md:basis-1/7 inline-flex gap-2 p-3 text-center'>
                                         <AddBtn onClick={() => { addCriteria(id, round - 1) }} />
+
                                     </div>
                                 </div>
                             }
@@ -83,10 +84,23 @@ function Users({ participants, round, rounds, id, uid }) {
                                                     updateScore(id, index, round - 1, uid, ix, e.target.value)
                                                 }
 
-                                            } inputMode='numeric' min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
+                                            } inputMode='numeric' value={
+                                                (() => {
+                                                    if (participants[index].rounds[round - 1].scores) {
+                                                        let score = 0
+                                                        participants[index].rounds[round - 1].scores.forEach((ele, i) => {
+                                                            if (ele.uid === uid) {
+                                                                score = participants[index].rounds[round - 1].scores[i].criteria[ix]
+                                                            }
+
+                                                        })
+                                                        return score
+                                                    }
+                                                })()
+                                            } min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
                                         </div>)
                                 }
-                                <div className='inline-flex gap-2  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-4 flex'>
+                                <div className='inline-flex mr-3 gap-2 w-full  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 justify-center items-center py-4 '>
                                     <span>{
                                         (() => {
                                             try {
