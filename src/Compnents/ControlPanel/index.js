@@ -16,19 +16,6 @@ function Dashboard(props) {
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id } = useParams()
-    const [criteria, setCriteria] = useState([
-        {
-            name: "Criteria-1",
-            value: 0
-        },
-        {
-            name: "Criteria-2",
-            value: 0
-        }, {
-            name: "Criteria-3",
-            value: 0
-        }
-    ])
     console.log(userCtx)
     useEffect(() => {
         const colRef = collection(db, "Events")
@@ -57,15 +44,16 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
                 <div className='flex  justify-between items-center '>
-                    <h1 className='text-4xl py-5 capitalize '>{data.name}</h1>
+                    <div className='py-3'>
+                        <h1 className='text-4xl capitalize '>{data.name}</h1>
+                        <div className='text-gray-300  text-md'>Round 1</div>
+                    </div>
                     <SearchBar query={query} setQuery={setQuery} />
                     <button onClick={() => auth.signOut()}>Sign out</button>
                 </div>
-                <div className='flex justify-between 
-             border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
-                    <ScoreSheet criteria={criteria} participants={data.participants} rounds={data.rounds} round={1} />
-                    {/* <Rounds participants={data.participants} />
-                    <Winners participants={data.participants} /> */}
+                <div className='flex justify-center item-center
+              overflow-hidden shadow-md  shadow-gray-800'>
+                    <ScoreSheet participants={data.participants} rounds={data.rounds} round={1} />
                 </div>
 
             </div>
@@ -75,5 +63,7 @@ function Dashboard(props) {
     </>
     )
 }
+
+
 
 export default Dashboard

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
-import { getEvents } from '../../firebaseConfig'
+import { getEvents, getOrganiser } from '../../firebaseConfig'
 
 function Events() {
     const userCtx = useContext(AuthContext)
@@ -10,12 +10,15 @@ function Events() {
     const [events, setEvents] = useState([])
     console.log(userCtx)
     useEffect(() => {
-        console.log(userCtx.currentUser.uid)
-        getEvents(userCtx.currentUser.uid).then((res) => {
-            setEvents(res)
-            console.log(res)
-            setLoading(false)
-        })
+        if (userCtx.currentUser) {
+            getEvents(userCtx.currentUser.uid).then((res) => {
+                setEvents(res)
+                setLoading(false)
+            }).catch(err => {
+                console.log(err)
+            })
+
+        }
     }, [])
     const navigate = useNavigate()
     return (
