@@ -31,7 +31,7 @@ function App() {
         <ModalContext>
           <Routes>
             <Route path="/events" element={<Events />} />
-            <Route path="/dashboard/:id" element={
+            <Route path="/dashboard/:id/:round" element={
               <ControlPanel />
             } />
             <Route path="/" element={<Login />} />

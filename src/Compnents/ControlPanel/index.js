@@ -15,7 +15,7 @@ function Dashboard(props) {
     const [loading, setLoading] = useState(true)
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
-    const { id } = useParams()
+    const { id, round } = useParams()
     console.log(userCtx)
     useEffect(() => {
         const colRef = collection(db, "Events")
@@ -46,14 +46,14 @@ function Dashboard(props) {
                 <div className='flex  justify-between items-center '>
                     <div className='py-3'>
                         <h1 className='text-4xl capitalize '>{data.name}</h1>
-                        <div className='text-gray-300  text-md'>Round 1</div>
+                        <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
                     </div>
                     <SearchBar query={query} setQuery={setQuery} />
                     <button onClick={() => auth.signOut()}>Sign out</button>
                 </div>
                 <div className='flex justify-center item-center
               overflow-hidden shadow-md  shadow-gray-800'>
-                    <ScoreSheet participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={1} />
+                    <ScoreSheet participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
                 </div>
 
             </div>

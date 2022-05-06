@@ -3,11 +3,14 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import { getEvents, getOrganiser } from '../../firebaseConfig'
-
+import RoundsModal from '../../Utility/RoundsModal'
 function Events() {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [events, setEvents] = useState([])
+    const [modal, setModal] = useState(false)
+    const [rounds, setRounds] = useState([])
+
     console.log(userCtx)
     useEffect(() => {
         if (userCtx.currentUser) {
@@ -30,19 +33,17 @@ function Events() {
                 {
                     !loading &&
                     events.map((ele, key) => {
-                        console.log(ele)
-                        return <Link to={`/dashboard/${ele.id}`}>
-                            <div key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
-                                <span>
-                                    {ele.name}
-                                </span>
-                            </div>
-                        </Link>
-                    }
-
-                    )
+                        return <div onClick={() => {
+                            setRounds(ele.rounds.map((e, i) => ({ ...e, round: i + 1, id: ele.id })).filter((item) => { console.log(item); return item.judges.some((e) => e.uid === userCtx.currentUser.uid) }));
+                            setModal(true)
+                        }} key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
+                            <span>
+                                {ele.name}
+                            </span>
+                        </div>
+                    })
                 }
-
+                <RoundsModal set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
 
             </div>
         </div>
