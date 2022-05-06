@@ -22,7 +22,6 @@ function Dashboard(props) {
     console.log(userCtx)
     useEffect(() => {
         const colRef = collection(db, "Events")
-        //real time update
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
