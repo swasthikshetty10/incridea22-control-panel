@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 
 import {
-    getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot, getDoc
+    enableIndexedDbPersistence, initializeFirestore, CACHE_SIZE_UNLIMITED, getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot, getDoc
 } from 'firebase/firestore'
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
@@ -16,8 +16,24 @@ const firebaseConfig = {
 }
 
 export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+//  = getFirestore(app);
 
+export const db = initializeFirestore(app, {
+    cacheSizeBytes: CACHE_SIZE_UNLIMITED
+});
+
+enableIndexedDbPersistence(db)
+    .catch((err) => {
+        if (err.code == 'failed-precondition') {
+            // Multiple tabs open, persistence can only be enabled
+            // in one tab at a a time.
+            // ...
+        } else if (err.code == 'unimplemented') {
+            // The current browser does not support all of the
+            // features required to enable persistence
+            // ...
+        }
+    });
 export async function getEvent(id) {
     const events = [];
 
