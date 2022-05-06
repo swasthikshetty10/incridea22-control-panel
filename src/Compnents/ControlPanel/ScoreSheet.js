@@ -11,12 +11,20 @@ function Users({ participants, round, rounds, id, uid }) {
         if (round == 1) {
             return true
         }
-        if (round == 2) {
+        else {
             return ele.rounds[round - 2].selected
         }
+
     }))
     const [modal, setModal] = useState(false)
     const [checkbox, setCheckbox] = useState(false)
+    const selectParticipant = async (id, pIndex, rIndex, value) => {
+        const docRef = doc(db, 'Events', id)
+        const eventDoc = await getDoc(docRef)
+        const event = { ...eventDoc.data() }
+        event.participants[pIndex].rounds[rIndex].selected = value
+        await updateDoc(docRef, event)
+    }
     const deleteCriteria = async (id, rIndex) => {
         const docRef = doc(db, 'Events', id)
         const eventDoc = await getDoc(docRef)
@@ -135,7 +143,7 @@ function Users({ participants, round, rounds, id, uid }) {
 
                                         })()
                                     }</span>
-                                    <CheckBox disabled={!checkbox} />
+                                    <CheckBox onChange={() => { console.log("Clickkkk"); selectParticipant(id, index, round - 1, !participants[index].rounds[round - 1].selected) }} checked={participants[index].rounds[round - 1].selected} disabled={!checkbox} />
                                 </div>
 
                             </div>
