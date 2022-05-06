@@ -1,7 +1,9 @@
+import { doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
+import { addCriteria, db } from '../../firebaseConfig'
 import AddBtn from '../../Utility/AddBtn'
 import Input from '../../Utility/Input'
-function Users({ participants, criteria, round, rounds }) {
+function Users({ participants, round, rounds, id, uid }) {
     console.log(participants)
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
         if (round == 1) {
@@ -11,7 +13,30 @@ function Users({ participants, criteria, round, rounds }) {
             return ele.rounds[round - 2].selected
         }
     }))
-
+    const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
+        console.log(id, pIndex, rIndex, uid, cIndex, score)
+        const docRef = doc(db, 'Events', id)
+        const eventDoc = await getDoc(docRef)
+        const event = { ...eventDoc.data() }
+        const scores = event.participants[pIndex].rounds[rIndex].scores
+        if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
+            const judgeIndex = participants[pIndex].rounds[rIndex].scores.findIndex(ele => ele.uid === uid)
+            console.log(judgeIndex)
+            scores[judgeIndex] = { ...scores[judgeIndex], criteria: scores[judgeIndex].criteria.map((val, ix) => ix === cIndex ? parseInt(score) : val) }
+            scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
+            event.participants[pIndex].rounds[rIndex].scores = scores
+        } else {
+            const obj = {
+                uid,
+                criteria: rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0),
+                total: this.criteria.reduce((a, b) => a + b, 0)
+            }
+            scores.push(obj)
+            console.log(scores)
+            event.participants[pIndex].rounds[rIndex].scores = scores
+        }
+        await updateDoc(docRef, event)
+    }
     return (
         <div className='h-full text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
             <div className='py-3'>
@@ -34,7 +59,7 @@ function Users({ participants, criteria, round, rounds }) {
                                             </div>)
                                     }
                                     <div className='md:basis-1/7 p-3 text-center'>
-                                        <AddBtn />
+                                        <AddBtn onClick={() => { addCriteria(id, round - 1) }} />
                                     </div>
                                 </div>
                             }
@@ -54,7 +79,7 @@ function Users({ participants, criteria, round, rounds }) {
                                         <div key={ix} className='md:basis-1/7 p-3 bg-gray-700'>
                                             <input onChange={
                                                 (e) => {
-                                                    // setScore(round, ix)
+                                                    updateScore(id, index, round - 1, uid, ix, e.target.value)
                                                 }
 
                                             } inputmode='numeric' min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />

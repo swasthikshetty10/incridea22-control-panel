@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 
 import {
-    getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot
+    getFirestore, collection, doc, getDocs, addDoc, deleteDoc, query, where, updateDoc, onSnapshot, getDoc
 } from 'firebase/firestore'
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
@@ -142,6 +142,16 @@ export async function getOrganiser(uid) {
         organisers.push({ ...organiser.data(), id: organiser.id })
     })
     return organisers[0]
+}
+
+export async function addCriteria(id, rIndex) {
+    const docRef = doc(db, 'Events', id)
+    const eventDoc = await getDoc(docRef)
+    const event = { ...eventDoc.data() }
+    event.rounds[rIndex].criteria.push("new")
+    console.log(event.rounds[rIndex].criteria)
+    await updateDoc(docRef, event)
+
 }
 
 

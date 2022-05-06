@@ -25,7 +25,7 @@ function Dashboard(props) {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === id) {
                         console.log(doc.id)
-                        setData(doc.data())
+                        setData({ ...doc.data(), id: doc.id })
                         setLoading(false)
                         return
                     }
@@ -53,7 +53,7 @@ function Dashboard(props) {
                 </div>
                 <div className='flex justify-center item-center
               overflow-hidden shadow-md  shadow-gray-800'>
-                    <ScoreSheet participants={data.participants} rounds={data.rounds} round={1} />
+                    <ScoreSheet participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={1} />
                 </div>
 
             </div>
