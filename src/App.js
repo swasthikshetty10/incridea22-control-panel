@@ -35,6 +35,7 @@ function App() {
               <ControlPanel />
             } />
             <Route path="/" element={<Login />} />
+            <Route path="/results/:id" element={<Dashboard />} />
           </Routes>
         </ModalContext>
       </AuthProvider>
