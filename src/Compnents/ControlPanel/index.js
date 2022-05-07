@@ -16,7 +16,6 @@ function Dashboard(props) {
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id, round } = useParams()
-    console.log(userCtx)
     useEffect(() => {
         const colRef = collection(db, "Events")
         //real time update
