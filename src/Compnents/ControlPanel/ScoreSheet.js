@@ -1,5 +1,5 @@
 import { doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { addCriteria, db } from '../../firebaseConfig'
 import AddBtn from '../../Utility/AddBtn'
 import Input from '../../Utility/Input'
@@ -8,7 +8,7 @@ import Modal from '../../Utility/RemoveModal'
 import SubmitModal from '../../Utility/SubmitModal'
 import { async } from '@firebase/util'
 import { useNavigate } from 'react-router-dom'
-function Users({ participants, round, rounds, id, uid }) {
+function Users({ query, participants, round, rounds, id, uid }) {
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
         if (round == 1) {
             return true
@@ -22,6 +22,18 @@ function Users({ participants, round, rounds, id, uid }) {
     const [submit, setSubmit] = useState(false)
     const [checkbox, setCheckbox] = useState(false)
     const navigate = useNavigate()
+    useEffect(() => {
+        setRoundParticipants(participants.filter((ele) => {
+
+            if (round == 1) {
+                return true && ele.pIds.some((id) => id.toLowerCase().includes(query.toLowerCase()))
+            }
+            else {
+                return ele.rounds[round - 2].selected && ele.pIds.some((id) => id.toLowerCase().includes(query.toLowerCase()))
+            }
+
+        }))
+    }, [query])
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events', id)
         const eventDoc = await getDoc(docRef)
@@ -72,12 +84,13 @@ function Users({ participants, round, rounds, id, uid }) {
 
     return (
         <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
-            <div className='py-3'>
-                <div className={`${rounds[round - 1].completed && 'opacity-50'} h-[77vh] tablescroll   overflow-y-scroll  w-full`}>
-                    {
+            <div className='pb-2'>
+                <div className={`${rounds[round - 1].completed && 'opacity-50'} h-[75vh] tablescroll   overflow-y-scroll  w-full`}>
+                    {roundParticipants.length ?
+
                         roundParticipants.map((obj, index) => <>
                             {
-                                index == 0 && <div key={index} className={`${rounds[round - 1].completed && 'pointer-events-none'} flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`${index}participant`}>
+                                index == 0 && <div className={`${rounds[round - 1].completed && 'pointer-events-none'} flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`k${index}participant`}>
                                     <div className="md:basis-1/4  transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
 
                                         <div className='text-2xl font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
@@ -160,7 +173,9 @@ function Users({ participants, round, rounds, id, uid }) {
                             </div>
                         </>
 
-                        )}
+                        ) :
+                        <div className='text-center p-10 text-3xl text-red-500'>No participant found with key "{query}" </div>
+                    }
                 </div>
             </div>
             {

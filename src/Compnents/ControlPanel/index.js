@@ -10,7 +10,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
-    const eventName = "capture the flag"
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
     const userCtx = useContext(AuthContext)
@@ -18,7 +17,6 @@ function Dashboard(props) {
     const { id, round } = useParams()
     useEffect(() => {
         const colRef = collection(db, "Events")
-        //real time update
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
@@ -41,18 +39,20 @@ function Dashboard(props) {
     return (<>
         {loading ? <div>Loading</div> :
 
-            <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
-                <div className='flex  justify-between items-center '>
-                    <div className='py-3'>
+            <div className="w-full px-5 relative  text-white pt-4 ">
+                <div className='flex pt-2 pb-1 justify-between items-start '>
+                    <div className=''>
                         <h1 className='text-4xl capitalize '>{data.name}</h1>
                         <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
                     </div>
-                    <SearchBar query={query} setQuery={setQuery} />
-                    <button onClick={() => auth.signOut()}>Sign out</button>
+                    <div className='inline-flex gap-3'>
+                        <SearchBar query={query} setQuery={setQuery} />
+                        <button className='px-2 py-1  rounded-md font-semibold bg-blue-600 hover:bg-blue-800 transition-all ease-in duration-200' onClick={() => auth.signOut()}>Log Out</button>
+                    </div>
                 </div>
                 <div className='flex justify-center item-center
-              overflow-hidden shadow-md  shadow-gray-800'>
-                    <ScoreSheet participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
+              overflow-hidden'>
+                    <ScoreSheet query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
                 </div>
 
             </div>
