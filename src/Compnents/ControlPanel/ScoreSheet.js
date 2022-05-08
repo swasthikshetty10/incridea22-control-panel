@@ -21,6 +21,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
     const [modal, setModal] = useState(false)
     const [submit, setSubmit] = useState(false)
     const [checkbox, setCheckbox] = useState(false)
+    const [count, setCount] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
         setRoundParticipants(participants.filter((ele) => {
@@ -33,7 +34,11 @@ function Users({ query, participants, round, rounds, id, uid }) {
             }
 
         }))
+
     }, [query])
+    useEffect(() => {
+        setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
+    })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
@@ -179,12 +184,12 @@ function Users({ query, participants, round, rounds, id, uid }) {
                 </div>
             </div>
             {
-                !rounds[round - 1].completed ?
+                !rounds[round - 1].completed && roundParticipants.length ?
                     <div className='flex justify-end gap-5 mb-3 mr-3'>
                         {!checkbox && <button onClick={() => { setCheckbox(true) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                             Select
                         </button>}
-                        <button onClick={() => { submitRound(id, round - 1); setSubmit(true) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                        <button disabled={count == 0} onClick={() => { setSubmit(true) }} className={`${count == 0 && "opacity-50"} flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none`}>
                             Submit
                         </button>
                     </div> : <div className='flex justify-end gap-5 mb-3 mr-3'>
@@ -194,7 +199,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
 
                     </div>
             }
-            <SubmitModal set={submit} onSubmit={() => { setSubmit(false) }} onClose={() => { setSubmit(false) }} />
+            <SubmitModal set={submit} onSubmit={() => { submitRound(id, round - 1); setSubmit(false) }} onClose={() => { setSubmit(false) }} />
             <Modal set={modal} onDelete={() => { deleteCriteria(id, round - 1); setModal(false) }} onClose={() => { setModal(false) }} />
         </div>
 
