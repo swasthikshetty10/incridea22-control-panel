@@ -50,7 +50,7 @@ export async function getEvent(id) {
 }
 
 export async function getEvents(uid) {
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const q = query(collRef, where(`roles.${uid}`, "==", "judge"))
     const querySnaphshot = await getDocs(q)
     const data = []
@@ -161,7 +161,7 @@ export async function getOrganiser(uid) {
 }
 
 export async function addCriteria(id, rIndex) {
-    const docRef = doc(db, 'Events', id)
+    const docRef = doc(db, 'Events2', id)
     const eventDoc = await getDoc(docRef)
     const event = { ...eventDoc.data() }
     event.rounds[rIndex].criteria.push("new")

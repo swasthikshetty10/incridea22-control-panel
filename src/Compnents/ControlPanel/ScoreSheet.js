@@ -35,21 +35,21 @@ function Users({ query, participants, round, rounds, id, uid }) {
         }))
     }, [query])
     const selectParticipant = async (id, pIndex, rIndex, value) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.participants[pIndex].rounds[rIndex].selected = value
         await updateDoc(docRef, event)
     }
     const submitRound = async (id, rIndex) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].completed = true
         await updateDoc(docRef, event)
     }
     const deleteCriteria = async (id, rIndex) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].criteria.pop()
@@ -57,7 +57,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
     }
     const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
         console.log(id, pIndex, rIndex, uid, cIndex, score)
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         const scores = event.participants[pIndex].rounds[rIndex].scores
@@ -116,7 +116,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
                             <div className={`${rounds[round - 1].completed && 'pointer-events-none '} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`${index}cp`}>
                                 <div className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                     <div className='flex-col gap-3 w-full  '>
-                                        {obj.pIds.map((pid, index) => <div key={`${index}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                        {obj.pIds.map((pid, idx) => <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
                                             {pid}
                                         </div>
                                         )}
@@ -128,17 +128,17 @@ function Users({ query, participants, round, rounds, id, uid }) {
                                         <div key={`criteria${ix}`} className='md:basis-1/7 p-3 bg-gray-700'>
                                             <input onChange={
                                                 (e) => {
-                                                    updateScore(id, index, round - 1, uid, ix, e.target.value)
+                                                    updateScore(id, obj.index, round - 1, uid, ix, e.target.value)
                                                 }
 
                                             } inputMode='numeric' value={
                                                 (() => {
-                                                    if (participants[index].rounds[round - 1].scores) {
+                                                    if (participants[obj.index].rounds[round - 1].scores) {
                                                         let score = 0
-                                                        if (participants[index].rounds[round - 1].scores.length > 0) {
-                                                            participants[index].rounds[round - 1].scores.forEach((ele, i) => {
+                                                        if (participants[obj.index].rounds[round - 1].scores.length > 0) {
+                                                            participants[obj.index].rounds[round - 1].scores.forEach((ele, i) => {
                                                                 if (ele.uid === uid) {
-                                                                    score = participants[index].rounds[round - 1].scores[i].criteria[ix]
+                                                                    score = participants[obj.index].rounds[round - 1].scores[i].criteria[ix]
                                                                 }
 
                                                             })
@@ -155,7 +155,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
                                         (() => {
                                             try {
                                                 let total = 0;
-                                                participants[index].rounds[round - 1].scores.forEach(ele => {
+                                                participants[obj.index].rounds[round - 1].scores.forEach(ele => {
                                                     if (ele.uid === uid) {
                                                         total = ele.total
                                                         return
@@ -168,7 +168,7 @@ function Users({ query, participants, round, rounds, id, uid }) {
 
                                         })()
                                     }</span>
-                                    <CheckBox onChange={() => { console.log("Clickkkk"); selectParticipant(id, index, round - 1, !participants[index].rounds[round - 1].selected) }} checked={participants[index].rounds[round - 1].selected} disabled={!checkbox} />
+                                    <CheckBox onChange={() => { console.log("Clickkkk"); selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }} checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />
                                 </div>
                             </div>
                         </>
