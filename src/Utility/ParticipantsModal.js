@@ -1,66 +1,8 @@
 import React from 'react'
 import {AiOutlineClose} from 'react-icons/ai'
 
-function ParticipantsModal ({ set, onClose }) {
-  const participants = [
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-    {
-      pId: 'INC-2022-NUMXN',
-      name: 'Numan Naeem',
-			usn: '4nm19cs121',
-      phNo: '8606521714',
-      collegeName: 'NMAM Institute of Technology',
-      email: '4nm19cs121@nmamit.in'
-    },
-  ]
-
+function ParticipantsModal ({ set, onClose, participants }) {
+	
   return (
     <>
       <div
