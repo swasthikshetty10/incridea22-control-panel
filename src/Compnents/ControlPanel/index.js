@@ -8,6 +8,7 @@ import {
 import { db } from '../../firebaseConfig'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
+import WinnerSelect from '../../Utility/WinnerSelect'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
@@ -50,10 +51,11 @@ function Dashboard(props) {
                         <button className='px-2 py-1  rounded-md font-semibold bg-blue-600 hover:bg-blue-800 transition-all ease-in duration-200' onClick={() => auth.signOut()}>Log Out</button>
                     </div>
                 </div>
-                <div className='flex justify-center item-center
-              overflow-hidden'>
-                    <ScoreSheet query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
-                </div>
+
+                <ScoreSheet maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
+
+
+
 
             </div>
 
