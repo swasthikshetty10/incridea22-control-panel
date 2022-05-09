@@ -38,7 +38,7 @@ function App() {
             <Route path="/judge/dashboard/:id/:round" element={
               <ControlPanel />
             } />
-            <Route path="/" element={<ParticipantsModal set />} />
+            <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/organiser/dashboard/:id" element={<Dashboard />} />
           </Routes>
