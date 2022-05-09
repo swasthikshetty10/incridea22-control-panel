@@ -19,11 +19,23 @@ function Events() {
         setLogoutLoading(false)
     }
 
+    const [role, setRole] = useState([])
+    console.log(userCtx)
     useEffect(() => {
         setLoading(true)
         if (userCtx.currentUser) {
-            getEvents(userCtx.currentUser.uid).then((res) => {
-                setEvents(res)
+            getEvents(userCtx.currentUser.uid, "judge").then((res) => {
+                if (res.length == 0) {
+                    getEvents(userCtx.currentUser.uid, "organiser").then((response) => {
+                        setEvents(response)
+                        setRole("judge")
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                } else {
+                    setEvents(res)
+                    setRole("judge")
+                }
                 setLoading(false)
             }).catch(err => {
                 console.log(err)
@@ -66,8 +78,7 @@ function Events() {
                         <AiOutlineLoading3Quarters className="mx-auto mt-[20vh] animate-spin text-5xl " />
                     </>
                 }
-                <RoundsModal set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
-
+                <RoundsModal role={role} set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
             </div>
         </div>
     )

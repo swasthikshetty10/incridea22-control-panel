@@ -49,9 +49,9 @@ export async function getEvent(id) {
     return events[0]
 }
 
-export async function getEvents(uid) {
+export async function getEvents(uid, role) {
     const collRef = collection(db, 'Events2')
-    const q = query(collRef, where(`roles.${uid}`, "==", "judge"))
+    const q = query(collRef, where(`roles.${uid}`, "==", role))
     const querySnaphshot = await getDocs(q)
     const data = []
     querySnaphshot.forEach((event) => {
