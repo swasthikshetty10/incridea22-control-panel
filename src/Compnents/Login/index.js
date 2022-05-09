@@ -25,7 +25,7 @@ function SignIn({ providers }) {
     console.log(userCtx)
     useEffect(() => {
         if (userCtx.currentUser) {
-            navigate("/events")
+            navigate("/home")
         }
     })
     return (

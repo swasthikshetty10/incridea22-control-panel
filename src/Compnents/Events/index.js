@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import { getEvents, getOrganiser } from '../../firebaseConfig'
 import RoundsModal from '../../Utility/RoundsModal'
-function Events() {
+function Events({ role }) {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [events, setEvents] = useState([])
@@ -43,8 +43,7 @@ function Events() {
                         </div>
                     })
                 }
-                <RoundsModal set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
-
+                <RoundsModal role={role} set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
             </div>
         </div>
     )

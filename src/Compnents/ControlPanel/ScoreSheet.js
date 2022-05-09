@@ -199,7 +199,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                 Submit
                             </button>}
                         </div> : <div className='flex justify-end gap-5 mb-3 mr-3'>
-                            <button onClick={() => { navigate("/events") }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                            <button onClick={() => { navigate("/judge/events") }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                                 Go Back
                             </button>
 
