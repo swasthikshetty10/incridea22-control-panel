@@ -16,11 +16,23 @@ function Events({ role }) {
 
     
 
+    const [role, setRole] = useState([])
+    console.log(userCtx)
     useEffect(() => {
         setLoading(true)
         if (userCtx.currentUser) {
-            getEvents(userCtx.currentUser.uid).then((res) => {
-                setEvents(res)
+            getEvents(userCtx.currentUser.uid, "judge").then((res) => {
+                if (res.length == 0) {
+                    getEvents(userCtx.currentUser.uid, "organiser").then((response) => {
+                        setEvents(response)
+                        setRole("judge")
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                } else {
+                    setEvents(res)
+                    setRole("judge")
+                }
                 setLoading(false)
             }).catch(err => {
                 console.log(err)

@@ -32,9 +32,7 @@ function App() {
       <AuthProvider>
         <ModalContext>
           <Routes>
-            
-            <Route path="/judge/events" element={<Events role="judge" />} />
-            <Route path="/organiser/events" element={<Events role="organiser" />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/judge/dashboard/:id/:round" element={
               <ControlPanel />
             } />
