@@ -5,7 +5,7 @@ import { AuthContext } from '../../Context/AuthContext'
 import { auth, getEvents, getOrganiser } from '../../firebaseConfig'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import RoundsModal from '../../Utility/RoundsModal'
-function Events() {
+function Events({ role }) {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [logoutLoading, setLogoutLoading] = useState(false)
@@ -66,8 +66,7 @@ function Events() {
                         <AiOutlineLoading3Quarters className="mx-auto mt-[20vh] animate-spin text-5xl " />
                     </>
                 }
-                <RoundsModal set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
-
+                <RoundsModal role={role} set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
             </div>
         </div>
     )

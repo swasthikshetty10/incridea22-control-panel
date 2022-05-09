@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function SubmitModal({ set, onClose, rounds }) {
+function SubmitModal({ set, onClose, rounds, role }) {
     const navigate = useNavigate()
     console.log(rounds)
     return (
@@ -12,7 +12,7 @@ function SubmitModal({ set, onClose, rounds }) {
                 </p>
                 {
                     rounds.map(
-                        (ele, ix) => <button onClick={() => { navigate(`/dashboard/${ele.id}/${ele.round}`) }} key={ix} className=' w-full font-semibold text-xl px-5 rounded-md my-2 bg-gray-700/70 hover:bg-gray-700/40 py-2 gap-3 cursor-pointer justify-center'>
+                        (ele, ix) => <button onClick={() => { navigate(`/${role}/dashboard/${ele.id}/${ele.round}`) }} key={ix} className=' w-full font-semibold text-xl px-5 rounded-md my-2 bg-gray-700/70 hover:bg-gray-700/40 py-2 gap-3 cursor-pointer justify-center'>
                             {`Round ${ele.round}`}
                         </button>
 

@@ -32,7 +32,7 @@ function SignIn({ providers }) {
 
     useEffect(() => {
         if (userCtx.currentUser) {
-            navigate("/events")
+            navigate("/home")
         }
     })
     return (
