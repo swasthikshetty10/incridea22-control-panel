@@ -5,6 +5,7 @@ import { AuthContext } from '../../Context/AuthContext'
 import { auth, getEvents, getOrganiser } from '../../firebaseConfig'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import RoundsModal from '../../Utility/RoundsModal'
+import LogoutBtn from '../../Utility/LogoutBtn'
 function Events({ role }) {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
@@ -13,11 +14,7 @@ function Events({ role }) {
     const [modal, setModal] = useState(false)
     const [rounds, setRounds] = useState([])
 
-    const handleLogout = async () => {
-        setLogoutLoading(true)
-        await auth.signOut()
-        setLogoutLoading(false)
-    }
+    
 
     useEffect(() => {
         setLoading(true)
@@ -41,13 +38,7 @@ function Events({ role }) {
                 <h1 className='text-center text-3xl'>
                     Your Events
                 </h1>
-                <button
-                    onClick={handleLogout}
-                    disabled={logoutLoading}
-                    className="inline flex justify-center items-center gap-2 text-center px-4 py-2 rounded disabled:bg-indigo-400 transition-colors border border-indigo-100 hover:bg-indigo-700 text-indigo-100 font-bold hover:bg-green-dark focus:outline-none my-1"
-                >
-                    {logoutLoading ? <> <AiOutlineLoading3Quarters className=" animate-spin text-lg " /> <span className=''>Logging Out</span></> : 'Logout'}
-                </button>
+                <LogoutBtn auth={auth} />
             </div>
             <div className='p-10 max-w-md mx-auto '>
                 {
