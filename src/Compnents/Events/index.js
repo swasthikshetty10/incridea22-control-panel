@@ -4,18 +4,28 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import { getEvents, getOrganiser } from '../../firebaseConfig'
 import RoundsModal from '../../Utility/RoundsModal'
-function Events({ role }) {
+function Events() {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [events, setEvents] = useState([])
     const [modal, setModal] = useState(false)
     const [rounds, setRounds] = useState([])
-
+    const [role, setRole] = useState([])
     console.log(userCtx)
     useEffect(() => {
         if (userCtx.currentUser) {
-            getEvents(userCtx.currentUser.uid).then((res) => {
-                setEvents(res)
+            getEvents(userCtx.currentUser.uid, "judge").then((res) => {
+                if (res.length == 0) {
+                    getEvents(userCtx.currentUser.uid, "organiser").then((response) => {
+                        setEvents(response)
+                        setRole("judge")
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                } else {
+                    setEvents(res)
+                    setRole("judge")
+                }
                 setLoading(false)
             }).catch(err => {
                 console.log(err)
