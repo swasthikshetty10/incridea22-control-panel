@@ -5,6 +5,8 @@ import { AuthContext } from '../../Context/AuthContext'
 import { auth, getEvents, getOrganiser } from '../../firebaseConfig'
 import LogoutBtn from '../../Utility/LogoutBtn'
 import RoundsModal from '../../Utility/RoundsModal'
+import {AiOutlineLoading3Quarters} from 'react-icons/ai'
+
 function Events() {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
@@ -45,7 +47,7 @@ function Events() {
             </div>
             <div className='p-10 max-w-md mx-auto '>
                 {
-                    !loading &&
+                    !loading ?
                     events.map((ele, key) => {
                         return <div onClick={() => {
                             setRounds(ele.rounds.map((e, i) => ({ ...e, round: i + 1, id: ele.id })).filter((item) => { console.log(item); return item.judges.some((e) => e.uid === userCtx.currentUser.uid) }));
@@ -55,7 +57,11 @@ function Events() {
                                 {ele.name}
                             </span>
                         </div>
-                    })
+                    }) 
+                    : 
+                    <>
+                        <AiOutlineLoading3Quarters className="mx-auto mt-[20vh] animate-spin text-5xl " />
+                    </>
                 }
                 <RoundsModal role={role} set={modal} rounds={rounds} onClose={() => { setModal(false) }} />
             </div>
