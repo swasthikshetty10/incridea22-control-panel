@@ -15,7 +15,7 @@ function Events() {
     useEffect(() => {
         if (userCtx.currentUser) {
             getEvents(userCtx.currentUser.uid, "judge").then((res) => {
-                if (res.length == 0) {
+                if (res.length === 0) {
                     getEvents(userCtx.currentUser.uid, "organiser").then((response) => {
                         setEvents(response)
                         setRole("judge")
