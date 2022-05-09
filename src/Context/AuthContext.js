@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebaseConfig";
+import { AiOutlineLoading3Quarters} from 'react-icons/ai'
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -13,7 +14,9 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     if (pending) {
-        return <>Loading...</>
+        return <div className="w-screen h-screen flex justify-center items-center">
+             <AiOutlineLoading3Quarters className=" animate-spin text-6xl " />
+        </div>
     }
 
     return (
