@@ -2,13 +2,17 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthContext';
 import { getOrganiser, loginOrganiser } from '../../firebaseConfig';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 function SignIn({ providers }) {
     const errorDisplay = useRef(null)
     const initialFormData = Object.freeze({ email: '', password: '', });
     const [formData, updateFormData] = useState(initialFormData);
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
     const userCtx = useContext(AuthContext)
     const handleChange = (e) => {
+        if(error) setError('')
         updateFormData({
             ...formData, [e.target.name]: e.target.value.trim(),
         });
@@ -16,18 +20,23 @@ function SignIn({ providers }) {
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await loginOrganiser(formData.email, formData.password);
-        getOrganiser(res.uid).then(data => {
+        setLoading(true)
+        try {
+            const res = await loginOrganiser(formData.email, formData.password);
+            await getOrganiser(res.uid)
             userCtx.setOrganizer()
-        })
+        } catch (error) {
+            setError('Invalid Username/Password')
+        }
+        setLoading(false)
 
     };
-    console.log(userCtx)
+
     useEffect(() => {
         if (userCtx.currentUser) {
             navigate("/events")
-        }
-    })
+        } else navigate('/')
+    }, [userCtx])
     return (
         <div>
             <div className="bg-gray-800 r min-h-screen flex flex-col text-white">
@@ -47,14 +56,16 @@ function SignIn({ providers }) {
                             name="password"
                             onChange={handleChange}
                             placeholder="Password" required />
-                        <div className="text-center"><a className="text-red-500 " ref={errorDisplay}>
-                        </a></div>
+                       <div className="text-center -mt-1 mb-2"><span className="text-red-500 " >
+                            {error}
+                        </span></div>
 
                         <button
                             type="submit"
-                            className="w-full flex justify-center items-center gap-2 text-center py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white hover:bg-green-dark focus:outline-none my-1"
+                            disabled={loading}
+                            className="w-full flex justify-center items-center gap-2 text-center py-3 rounded disabled:bg-indigo-500 bg-indigo-600 hover:bg-indigo-700 text-white hover:bg-green-dark focus:outline-none my-1"
                         >
-                            Log In</button>
+                            {loading ? <> <AiOutlineLoading3Quarters className=" animate-spin text-lg " /> <span className=''>Logging In...</span></> : 'Login'}</button>
                         <a href="/resetpassword" ><a className="  text-blue-500" >Forgot password?</a></a>
                     </form>
 
@@ -64,6 +75,5 @@ function SignIn({ providers }) {
         </div >
     )
 }
-
 
 export default SignIn
