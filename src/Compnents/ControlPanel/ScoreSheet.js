@@ -8,6 +8,7 @@ import SubmitModal from '../../Utility/SubmitModal'
 import { useNavigate } from 'react-router-dom'
 import WinnerSelect from '../../Utility/WinnerSelect'
 function Users({ query, participants, round, rounds, id, uid, maxParticipants }) {
+
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
         if (round == 1) {
             return true
@@ -182,7 +183,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                             </>
 
                             ) :
-                            <div className='text-center p-10 text-3xl text-red-500'>No participant found with key "{query}" </div>
+                            <div className='text-center p-10 font-light text-3xl text-gray-500'>No participants found! </div>
                         }
                     </div>
                 </div>
