@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Rounds from '.'
 import ParticipantsModal from '../../../Utility/ParticipantsModal'
-import { ModalContext } from '../../../Context/ModalContext'
 
-function ParticipantBtn({ selected, setSelected, pIds, round }) {
+function ParticipantBtn({ selected, setSelected, pIds, round, teamName }) {
 
     const [modal, setModal] = useState(false)
 
@@ -13,10 +11,20 @@ function ParticipantBtn({ selected, setSelected, pIds, round }) {
             <div onClick={() => setModal(true)} 
             className="bg-gray-700 hover:bg-opacity-50 min-w-[5rem]  cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-center ">
                 <div className='flex-col gap-3  w-full  '>
-                    {pIds.map((pid, index) => <div key={index} className='bg-gray-500 p-2 bg-opacity-20 inline-flex flex-nowrap my-1 justify-between w-full '>
-                        <span className='whitespace-nowrap'>{pid}</span>
-                    </div>
-                    )}
+                {
+                    pIds.length > 4 ?
+                        teamName :                            
+                        <div>
+                            {pIds.length > 1 && <span className='font-semibold capitalize text-blue-300'>{teamName}</span>}
+                            {
+                                pIds.map((pid, idx) => 
+                                <div key={`${idx}pId`} className='bg-gray-500 p-2 bg-opacity-20 inline-flex flex-nowrap whitespace-nowrap my-1 justify-between w-full '>
+                                    {pid}
+                                </div>)
+                            }
+                        </div>
+
+                }
                 </div>
             </div >
        </>

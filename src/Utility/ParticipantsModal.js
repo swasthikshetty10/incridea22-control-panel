@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineClose, AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { db } from '../firebaseConfig';
 
-function ParticipantsModal({ set, onClose, pIds }) {
+function ParticipantsModal({ isJudge, set, onClose, pIds }) {
   const [participants, setParticipants] = useState([])
   const [loading, setLoading] = useState(false)
 
@@ -28,8 +28,42 @@ function ParticipantsModal({ set, onClose, pIds }) {
   }
   
   useEffect(() => {
-    getParticipants(pIds).finally(() => setLoading(false))
-  }, [])
+    if(!isJudge) getParticipants(pIds).finally(() => setLoading(false))
+  }, [isJudge, pIds])
+
+
+  if(isJudge) {
+    return (
+      <>
+      <div
+        className={`${set ? 'flex' : 'hidden'
+          }  backdrop-blur-sm fixed top-0 right-0 z-[999] justify-center w-screen bg-gray-800/50 h-screen overflow-auto`}
+      >
+        <div className=' w-[90vw] md:w-[50vw] xl:w-[32vw] my-10 h-fit justify-center items-center  bg-gray-900/75 backdrop-blur-md text-center rounded-xl text-white '>
+            <div className='sticky top-0 bg-gray-800 p-5 flex items-center justify-between mb-3 border-b border-gray-600'>
+              <p className='text-xl mr-3'>Team Members</p>
+              <AiOutlineClose onClick={onClose} className='hover:text-gray-400 cursor-pointer   text-xl' />
+            </div>
+          <>
+            <div className='px-8'>
+              {pIds.map(pId => (
+                    <p className='font-semibold text-left text-lg mb-2'>{pId}</p>
+              ))}
+            </div>
+            <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
+              <button
+                onClick={onClose}
+                className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
+              >
+                Close
+              </button>
+            </div>
+          </>
+        </div> 
+      </div>
+    </>
+    )
+  }
 
   return (
     <>

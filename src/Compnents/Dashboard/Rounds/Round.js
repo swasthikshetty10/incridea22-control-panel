@@ -31,6 +31,7 @@ function Round({ id, participants, disabled }) {
                                     selected={selected}
                                     setSelected={setSelected}
                                     key={i}
+                                    teamName={obj.teamName}
                                     pIds={obj.pIds}
                                     round={obj.rounds[id - 1]}
                                 />
@@ -41,6 +42,7 @@ function Round({ id, participants, disabled }) {
                                     selected={selected}
                                     setSelected={setSelected}
                                     key={i}
+                                    teamName={obj.teamName}
                                     pIds={obj.pIds}
                                     round={obj.rounds[id - 1]}
                                 />

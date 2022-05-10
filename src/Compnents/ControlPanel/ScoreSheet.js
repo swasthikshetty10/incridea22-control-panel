@@ -227,7 +227,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                 (rounds.length === parseInt(round) && checkbox) &&
                 <WinnerSelect id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
             }
-            {partsModalOpen && clickedPIds.length && <ParticipantsModal set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
+            {partsModalOpen && clickedPIds.length > 2 && <ParticipantsModal isJudge set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
 
         </div>
     )
