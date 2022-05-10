@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { db, select } from '../../firebaseConfig'
@@ -20,14 +20,31 @@ function RegisterModal({ set, onClose, events }) {
     }
     const submitHandler = async () => {
         const final_pIds = participant.pIds.filter(pid => pid != "")
+        let reqUsers = []
+        const collRef = collection(db, 'Participants')
+        for (const pId of final_pIds) {         //needed for loading to work idk why
+            const q = query(collRef, where('pId', '==', pId))
+            const participantRef = await getDocs(q)
+            reqUsers = [];
+            participantRef.forEach(ele => {
+                reqUsers.push({ ...ele.data() })
+            })
+            console.log("participant refff", reqUsers)
+            if (reqUsers.length == 0) {
+                alert(`Invalid PID ${pId}`)
+                return
+            }
+        }
         let final_obj = { ...participant }
         final_obj.pIds = final_pIds
         console.log(final_obj)
         const docRef = doc(db, 'Events2', events.id)
         let participants = [...events.participants]
         final_obj.index = participants.length
-        await updateDoc(db, { participants })
-
+        participants.push(final_obj)
+        await updateDoc(docRef, { participants })
+        alert("Registerd User")
+        onClose();
     }
     useEffect(() => {
 
