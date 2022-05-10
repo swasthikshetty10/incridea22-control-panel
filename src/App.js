@@ -13,6 +13,8 @@ import Login from "./Compnents/Login";
 import Events from "./Compnents/Events";
 import ControlPanel from './Compnents/ControlPanel'
 import Home from "./Compnents/Home";
+import JuryEvents from './Compnents/JuryPanel/Events'
+import Jury from './Compnents/JuryPanel/index'
 function App() {
   const userCtx = useContext(AuthContext)
   useEffect(() => {
@@ -37,6 +39,8 @@ function App() {
             } />
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
+            <Route exact path="/jury" element={<JuryEvents />} />
+            <Route exact path="/jury/dashboard/:id/:round" element={<Jury />} />
             <Route path="/organiser/dashboard/:id" element={<Dashboard />} />
           </Routes>
         </ModalContext>
