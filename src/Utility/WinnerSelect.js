@@ -16,7 +16,7 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
         event.rounds[rIndex].completed = true
         await updateDoc(docRef, event)
     }
-    console.log(winners)
+    console.log('winners', winners)
     return (
         <div className={`p-3 border-2 border-l-0 border-opacity-40 h-[78vh] py-5 tablescroll overflow-y-scroll border-gray-300 ${completed && 'opacity-50'} `}>
             <div className='text-black flex flex-col gap-2 w-44 '>
