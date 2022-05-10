@@ -162,10 +162,10 @@ export async function getOrganiser(uid) {
 
 export async function getWinners() {
     const winners = [];
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const eventDocs = await getDocs(collRef)
     eventDocs.forEach((event) => {
-        winners.push({ name: event.data().name, id: event.id, winner: event.data().winner })
+        winners.push({ name: event.data().name, id: event.id, winner: event.data().winners, completed: event.data().completed })
     })
     return winners
 }

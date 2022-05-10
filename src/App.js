@@ -13,6 +13,7 @@ import Login from "./Compnents/Login";
 import Events from "./Compnents/Events";
 import ControlPanel from './Compnents/ControlPanel'
 import Home from "./Compnents/Home";
+import WinnersList from "./Compnents/WinnersList";
 function App() {
   const userCtx = useContext(AuthContext)
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/organiser/dashboard/:id" element={<Dashboard />} />
+            <Route path="/winners" element={<WinnersList />} />
           </Routes>
         </ModalContext>
       </AuthProvider>
