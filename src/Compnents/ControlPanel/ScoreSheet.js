@@ -38,8 +38,6 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     useEffect(() => {
         setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
         const docRef = doc(db, 'Events2', id)
-        // const eventDoc = await getDoc(docRef)
-        // const event = { ...eventDoc.data() }
     })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)

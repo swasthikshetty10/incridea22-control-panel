@@ -23,7 +23,7 @@ function Round({ id, participants, disabled }) {
             </h2>
             {disabled && <div className="absolute z-50 w-full h-full"></div>}
             <div className="py-3">
-                <div className=" h-[78vh] tablescroll overflow-y-scroll w-full">
+                <div className=" h-[72vh] tablescroll overflow-y-scroll w-full">
                     {participants.map((obj, i) => {
                         if (id === 1) {
                             return (

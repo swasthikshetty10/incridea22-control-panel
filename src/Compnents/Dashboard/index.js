@@ -21,7 +21,7 @@ function Dashboard(props) {
     const { id } = useParams()
     console.log(userCtx)
     useEffect(() => {
-        const colRef = collection(db, "Events")
+        const colRef = collection(db, "Events2")
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
@@ -45,10 +45,14 @@ function Dashboard(props) {
         {loading ? <div>Loading</div> :
 
             <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
-                <div className='flex  justify-between items-center '>
-                    <h1 className='text-4xl py-5'>Event XYZ</h1>
-                    <SearchBar query={query} setQuery={setQuery} />
-                    <button onClick={() => auth.signOut()}>Sign out</button>
+                <div className='flex pt-2 pb-2 justify-between items-start '>
+                    <div className=''>
+                        <h1 className='text-4xl capitalize '>{data.name}</h1>
+                    </div>
+                    <div className='inline-flex gap-3'>
+                        <SearchBar query={query} setQuery={setQuery} />
+                        <button className='px-2 py-1  rounded-md font-semibold bg-blue-600 hover:bg-blue-800 transition-all ease-in duration-200' onClick={() => auth.signOut()}>Log Out</button>
+                    </div>
                 </div>
                 <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
