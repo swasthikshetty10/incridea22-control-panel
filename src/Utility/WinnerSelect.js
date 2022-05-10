@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { db } from '../firebaseConfig'
 import WinnerSubmit from './WinnerSubmitModal'
 function WinnerSelect({ id, round, maxParticipants, completed, completedWinners }) {
-    const [winners, setWinners] = useState(completed ? completedWinners : { winner: new Array(maxParticipants).fill(""), runner: new Array(maxParticipants).fill("") })
+    const [winners, setWinners] = useState(completed ? completedWinners : { winner: new Array(maxParticipants).fill(""), runner: new Array(maxParticipants).fill(""), secondRunner: new Array(maxParticipants).fill("") })
     const [submit, setSubmit] = useState(false)
     const submitWinners = async (id) => {
         const docRef = doc(db, 'Events2', id)
@@ -18,24 +18,24 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
     }
     console.log(winners)
     return (
-        <div className={`p-3 border-2 border-l-0 border-opacity-40 border-gray-300 ${completed &&  'opacity-50'} `}>
+        <div className={`p-3 border-2 border-l-0 border-opacity-40 h-[78vh] py-5 tablescroll overflow-y-scroll border-gray-300 ${completed && 'opacity-50'} `}>
             <div className='text-black flex flex-col gap-2 w-44 '>
                 <div className='text-xl text-white   gap-4  font-bold capitalize text-center'>{completed ? 'Selected ' : 'Select '} winner</div>
                 {
                     winners.winner.map((ele, ix) => {
                         return <input disabled={completed} className='p-2 disabled:text-white'
-                         placeholder='enter winner PID' onChange={(e) => {
-                            let winner = [...winners.winner]
-                            winner[ix] = e.target.value.toUpperCase()
-                            setWinners({ ...winners, winner })
-                        }} 
-                        value={ele} />
+                            placeholder='enter winner PID' onChange={(e) => {
+                                let winner = [...winners.winner]
+                                winner[ix] = e.target.value.toUpperCase()
+                                setWinners({ ...winners, winner })
+                            }}
+                            value={ele} />
                     })
                 }
 
             </div>
             <div className='text-black flex mt-3 flex-col gap-2 w-44 '>
-                <div className='text-xl text-white   gap-4  font-bold capitalize text-center'>{completed ? 'Selected ' : 'Select '} Runner</div>
+                <div className='text-xl text-white   gap-4  font-bold capitalize text-center'>{completed ? 'Selected ' : 'Select '} Runner Up</div>
                 {
                     winners.winner.map((ele, ix) => {
                         return <input disabled={completed} className='p-2 disabled:text-white' placeholder='enter runner PID' onChange={(e) => {
@@ -43,6 +43,19 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
                             runner[ix] = e.target.value
                             setWinners({ ...winners, runner })
                         }} value={winners.runner[ix].toUpperCase()} />
+                    })
+                }
+
+            </div>
+            <div className='text-black flex mt-3 flex-col gap-2 w-44 '>
+                <div className='text-xl text-white   gap-4  font-bold capitalize text-center'>{completed ? 'Selected ' : 'Select '} Second Runner Up</div>
+                {
+                    winners.secondRunner.map((ele, ix) => {
+                        return <input disabled={completed} className='p-2 disabled:text-white' placeholder='enter runner PID' onChange={(e) => {
+                            let secondRunner = [...winners.secondRunner]
+                            secondRunner[ix] = e.target.value
+                            setWinners({ ...winners, secondRunner })
+                        }} value={winners.secondRunner[ix].toUpperCase()} />
                     })
                 }
 

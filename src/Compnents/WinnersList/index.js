@@ -3,7 +3,7 @@ import { getWinners } from '../../firebaseConfig'
 import ParticipantsModal from '../../Utility/ParticipantsModal'
 import SearchBar from '../../Utility/SearchBar'
 
-function WinnersList () {
+function WinnersList() {
   const [winners, setWinners] = useState([])
   const [loading, setLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
@@ -37,7 +37,7 @@ function WinnersList () {
       <div className='flex gap-10 items-center justify-center'>
         <h1 className='text-center text-3xl'>
           Click an event to view its winners
-          <p>(Events in green are completed)</p>
+          <p className='text-base text-green-500'>(Events in green are completed)</p>
         </h1>
       </div>
       <div className='p-10 max-w-md mx-auto'>
@@ -50,7 +50,7 @@ function WinnersList () {
                 winners
                 setQuery={setQuery}
                 query={query}
-                onSearch={() => {}}
+                onSearch={() => { }}
               />
               <label class='inline-flex justify-center w-full mt-3 items-center'>
                 <input
@@ -74,27 +74,28 @@ function WinnersList () {
                 </span>
               </label>
             </div>
-            {searchResults.map((event, idx) => {
-              return (
-                <div
-                  onClick={() => {
-                    setModalOpen(true)
-                    setClickedPIds(event.winner)
-                  }}
-                  key={idx}
-                  className={`p-3 text-2xl ${
-                    event.completed ? 'bg-green-500' : 'bg-black'
-                  } hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30`}
-                >
-                  <span>{event.name}</span>
-                </div>
-              )
-            })}
+            <div className='h-[65vh] overflow-auto'>
+              {searchResults.map((event, idx) => {
+                return (
+                  <div
+                    onClick={() => {
+                      setModalOpen(true)
+                      setClickedPIds(event.winner)
+                    }}
+                    key={idx}
+                    className={`p-3 text-2xl ${event.completed ? 'bg-green-500' : 'bg-black'
+                      } hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30`}
+                  >
+                    <span>{event.name}</span>
+                  </div>
+                )
+              })}
+            </div>
           </>
         )}
       </div>
       <ParticipantsModal
-				isWinners
+        isWinners
         onClose={() => setModalOpen(false)}
         set={modalOpen}
         pIds={clickedPIds}
