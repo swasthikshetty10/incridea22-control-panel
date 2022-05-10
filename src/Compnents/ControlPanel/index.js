@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
-import { AiFillCaretLeft } from 'react-icons/ai'
+import { IoIosArrowBack} from 'react-icons/io'
 import ScoreSheet from './ScoreSheet'
 import SearchBar from '../../Utility/SearchBar'
 import {
@@ -44,8 +44,8 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white pt-4 ">
                 <div className='flex pt-2 pb-1 justify-between items-start '>
-                    <div className='flex gap-3 items-center'>
-                        <AiFillCaretLeft className='text-3xl cursor-pointer hover:text-gray-400' onClick={() => navigator('/events')} />
+                    <div onClick={() => navigator('/events')}  className='flex hover:gap-4 gap-3 items-center transition-all hover:opacity-70 cursor-pointer'>
+                        <IoIosArrowBack className='text-3xl ' />
                         <div className=''>
                             <h1 className='text-4xl capitalize '>{data.name}</h1>
                             <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
@@ -57,7 +57,7 @@ function Dashboard(props) {
                     </div>
                 </div>
 
-                <ScoreSheet maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
+                <ScoreSheet winners={data.winners} maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
 
 
 
