@@ -7,8 +7,8 @@ import Modal from '../../Utility/RemoveModal'
 import SubmitModal from '../../Utility/SubmitModal'
 import { useNavigate } from 'react-router-dom'
 import WinnerSelect from '../../Utility/WinnerSelect'
+import ParticipantsModal from '../../Utility/ParticipantsModal'
 function Users({ query, participants, round, rounds, id, uid, maxParticipants }) {
-
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
         if (round == 1) {
             return true
@@ -18,9 +18,11 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
         }
 
     }))
+    const [clickedPIds, setClickedPIds] = useState([])
     const [modal, setModal] = useState(false)
     const [submit, setSubmit] = useState(false)
     const [checkbox, setCheckbox] = useState(false)
+    const [partsModalOpen, setPartsModalOpen] = useState(false)
     const [count, setCount] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
@@ -38,7 +40,6 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     }, [query])
     useEffect(() => {
         setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
-        const docRef = doc(db, 'Events2', id)
     })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)
@@ -90,12 +91,10 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     }
     const submitWinners = async (id, winners) => {
         const docRef = doc(db, 'Events2', id)
-        const eventDoc = await getDoc(docRef)
         await updateDoc(docRef, { winners: winners })
     }
     return (
-        <div className='flex justify-center item-center
-        overflow-hidden'>
+        <div className='flex justify-center item-center overflow-hidden'>
             <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
                 <div className='pb-2'>
                     <div className={`${rounds[round - 1].completed && 'opacity-50'} h-[75vh] tablescroll   overflow-y-scroll  w-full`}>
@@ -103,10 +102,10 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
 
                             roundParticipants.map((obj, index) => <>
                                 {
-                                    index == 0 && <div className={`${rounds[round - 1].completed && 'pointer-events-none'} flex sticky top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`k${index}participant`}>
-                                        <div className="md:basis-1/4  transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
+                                    index == 0 && <div className={`${rounds[round - 1].completed && 'pointer-events-none'} flex sticky  top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`k${index}participant`}>
+                                        <div className="md:basis-1/3        transform ease-in-out duration-50 bg-opacity-90 m-2  px-2 py-1 flex justify-between ">
 
-                                            <div className='text-2xl font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
+                                            <div className='text-2xl grow  font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
                                                 Participant
                                             </div>
                                         </div>
@@ -126,15 +125,28 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                     </div>
                                 }
 
-                                <div className={`${rounds[round - 1].completed && 'pointer-events-none '}  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`${index}cp`}>
-                                    <div className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
+                                <div className={`${rounds[round - 1].completed && 'pointer-events-none '}  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-8`} key={`${index}cp`}>
+                                    <div onClick={() => {setClickedPIds(obj.pIds); setPartsModalOpen(true)}} className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                         <div className='flex-col gap-3 w-full  '>
-                                            {obj.pIds.map((pid, idx) => <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
-                                                {pid}
+                                            <div className=' bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                                {
+                                                    obj.pIds.length > 4 ?
+                                                     obj.teamName :                            
+                                                        <div>
+                                                            {obj.pIds.length > 1 && <span className='font-semibold capitalize text-blue-300'>{obj.teamName}</span>}
+                                                            {
+                                                                obj.pIds.map((pid, idx) => 
+                                                                <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                                                    {pid}
+                                                                </div>)
+                                                            }
+                                                        </div>
+                 
+                                                }
                                             </div>
-                                            )}
                                         </div>
                                     </div>
+
                                     {
                                         rounds[round - 1].criteria.map((name, ix) =>
 
@@ -163,8 +175,8 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                                 } className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' />
                                             </div>)
                                     }
-                                    <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-2 w-full  hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
-                                        <span className='py-4 px-5 bg-gray-700'>{
+                                    <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-1   hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
+                                        <span className='py-4 px-5 bg-gray-700 w-16'>{
                                             (() => {
                                                 try {
                                                     return participants[obj.index].rounds[round - 1].scores.find(ele => ele.uid === uid).total
@@ -200,7 +212,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                 Submit
                             </button>}
                         </div> : <div className='flex justify-end gap-5 mb-3 mr-3'>
-                            <button onClick={() => { navigate("/judge/events") }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                            <button onClick={() => { navigate("/events") }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                                 Go Back
                             </button>
 
@@ -214,8 +226,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
             {
                 (rounds.length === parseInt(round) && checkbox) &&
                 <WinnerSelect id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
-
             }
+            {partsModalOpen && clickedPIds.length && <ParticipantsModal set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
+
         </div>
     )
 }

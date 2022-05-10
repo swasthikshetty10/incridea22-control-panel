@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
+import { AiFillCaretLeft } from 'react-icons/ai'
 import ScoreSheet from './ScoreSheet'
 import SearchBar from '../../Utility/SearchBar'
 import {
@@ -43,9 +44,12 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white pt-4 ">
                 <div className='flex pt-2 pb-1 justify-between items-start '>
-                    <div className=''>
-                        <h1 className='text-4xl capitalize '>{data.name}</h1>
-                        <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
+                    <div className='flex gap-3 items-center'>
+                        <AiFillCaretLeft className='text-3xl cursor-pointer hover:text-gray-400' onClick={() => navigator('/events')} />
+                        <div className=''>
+                            <h1 className='text-4xl capitalize '>{data.name}</h1>
+                            <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
+                        </div>
                     </div>
                     <div className='inline-flex gap-3'>
                         <SearchBar query={query} setQuery={setQuery} />
