@@ -127,7 +127,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                     </div>
                                 }
 
-                                <div className={`${rounds[round - 1].completed && 'pointer-events-none '} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`${index}cp`}>
+                                <div className={`${rounds[round - 1].completed && 'pointer-events-none '}  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`${index}cp`}>
                                     <div className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                         <div className='flex-col gap-3 w-full  '>
                                             {obj.pIds.map((pid, idx) => <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
@@ -164,25 +164,21 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                                 } className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' />
                                             </div>)
                                     }
-                                    <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-2 w-full  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
-                                        <span>{
+                                    <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-2 w-full  hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
+                                        <span className='py-4 px-5 bg-gray-700'>{
                                             (() => {
                                                 try {
-                                                    let total = 0;
-                                                    participants[obj.index].rounds[round - 1].scores.forEach(ele => {
-                                                        if (ele.uid === uid) {
-                                                            total = ele.total
-                                                            return
-                                                        }
-                                                    });
-                                                    return total
+                                                    return participants[obj.index].rounds[round - 1].scores.find(ele => ele.uid === uid).total
                                                 } catch {
                                                     return 0
                                                 }
 
                                             })()
                                         }</span>
-                                        {rounds.length != parseInt(round) && < CheckBox onChange={() => { selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }} checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />}
+                                        {checkbox && <div className='p-4  bg-gray-700 ml-2'>{rounds.length != parseInt(round) && 
+                                            <CheckBox onChange={() => { selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }} 
+                                            checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />}
+                                        </div>}
                                     </div>
                                 </div>
                             </>
@@ -230,7 +226,7 @@ function CheckBox(props) {
         <input
             {...props}
             type={"checkbox"}
-            className={`${props.disabled ? "hidden" : ""} form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transformduration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault`}></input>
+            className={`${props.disabled ? "hidden" : ""} cursor-pointer form-check-input appearance-none p-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-green-600 checked:border-blue-600 focus:outline-none transformduration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left  cursor-pointer" type="checkbox" value="" id="flexCheckDefault`}></input>
     )
 }
 

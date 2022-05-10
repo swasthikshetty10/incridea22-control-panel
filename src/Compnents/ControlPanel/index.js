@@ -9,6 +9,7 @@ import { db } from '../../firebaseConfig'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import WinnerSelect from '../../Utility/WinnerSelect'
+import LogoutBtn from '../../Utility/LogoutBtn'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
@@ -48,7 +49,7 @@ function Dashboard(props) {
                     </div>
                     <div className='inline-flex gap-3'>
                         <SearchBar query={query} setQuery={setQuery} />
-                        <button className='px-2 py-1  rounded-md font-semibold bg-blue-600 hover:bg-blue-800 transition-all ease-in duration-200' onClick={() => auth.signOut()}>Log Out</button>
+                        <LogoutBtn auth={auth} />
                     </div>
                 </div>
 
