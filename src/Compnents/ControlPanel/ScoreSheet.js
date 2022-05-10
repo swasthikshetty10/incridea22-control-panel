@@ -43,17 +43,16 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)
-        const eventDoc = await getDoc(docRef)
-        const event = { ...eventDoc.data() }
-        event.participants[pIndex].rounds[rIndex].selected = value
-        await updateDoc(docRef, event)
+        const new_participants = [...participants]
+        new_participants[pIndex].rounds[rIndex].selected = value
+        await updateDoc(docRef, { participants: new_participants })
     }
     const submitRound = async (id, rIndex) => {
         const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].completed = true
-        await updateDoc(docRef, event)
+        await updateDoc(docRef, { rounds: event.rounds })
     }
     async function addCriteria(id, rIndex) {
         const docRef = doc(db, 'Events2', id)
