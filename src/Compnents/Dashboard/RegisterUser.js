@@ -22,6 +22,10 @@ function RegisterModal({ set, onClose, events }) {
         const final_pIds = participant.pIds.filter(pid => pid != "")
         let reqUsers = []
         const collRef = collection(db, 'Participants')
+        if (final_pIds.length === 0) {
+            alert(`Enter PID`)
+            return
+        }
         for (const pId of final_pIds) {         //needed for loading to work idk why
             const q = query(collRef, where('pId', '==', pId))
             const participantRef = await getDocs(q)
@@ -65,7 +69,7 @@ function RegisterModal({ set, onClose, events }) {
                         {events.maxParticipants > 1 &&
                             <div className='flex flex-col items-start'>
                                 <label>{`Team Name`}</label>
-                                <input onChange={(e) => { setparticipant((prev) => ({ ...prev, teamName: e.target.value.trim() })) }} className='text-black p-3 mb-2' placeholder={`Enter Team Name`} type="text" />
+                                <input required={true} onChange={(e) => { setparticipant((prev) => ({ ...prev, teamName: e.target.value.trim() })) }} className='text-black p-3 mb-2' placeholder={`Enter Team Name`} type="text" />
                             </div>
                         }
                         {Array.from(Array(events.maxParticipants).keys()).map((key) =>
@@ -85,8 +89,7 @@ function RegisterModal({ set, onClose, events }) {
                         )}
                     </div>
                     <div className='flex  py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-center '>
-                        <button onClick={submitHandler} className='px-3 py-2 rounded-md border-2 hover:bg-green-600 border-green-500'>Submit</button>
-
+                        <button type="submit" onClick={submitHandler} className='px-3 py-2 rounded-md border-2 hover:bg-green-600 border-green-500'>Submit</button>
                     </div>
                 </div>
             </div>

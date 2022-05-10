@@ -165,7 +165,7 @@ export async function getWinners() {
     const collRef = collection(db, 'Events')
     const eventDocs = await getDocs(collRef)
     eventDocs.forEach((event) => {
-        winners.push({ name: event.data().name, id: event.id, winner: event.data().winner })
+        winners.push({ name: event.data().name, id: event.id, winners: event.data().winners })
     })
     return winners
 }
