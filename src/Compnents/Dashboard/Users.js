@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import RegisterUser from './RegisterUser'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 function Users({ participants, events }) {
     const [modal, setModal] = useState(false)
     return (
         <div className='h-full text-center  border-opacity-40 border-gray-300 border-r-2 '>
-            <h2 className='font-semibold border-b-2 p-2 border-opacity-40 border-gray-300  sm:p-4 text-2xl'>Participants
-                <button onClick={() => { setModal(true) }} className='ml-2 px-2  text-center font-bold rounded-sm bg-green-500'>+</button>
+            <h2 className='font-semibold flex justify-between items-center border-b-2 p-2 border-opacity-40 border-gray-300  sm:p-4 text-2xl'>Participants
+                <button onClick={() => { setModal(true) }} className='ml-2 p-1 text-green-500 hover:text-white hover:bg-green-600 transition-colors text-center font-bold rounded-md border border-green-500'>
+                    <AiOutlinePlus className='' />
+                </button>
             </h2>
             <div className='py-3'>
                 <div className='h-[72vh] tablescroll  overflow-y-scroll w-full'>

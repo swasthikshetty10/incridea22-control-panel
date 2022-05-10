@@ -18,7 +18,7 @@ function Round({ id, participants, disabled }) {
             className={`${disabled && "opacity-50"
                 } relative   w-full  text-center   border-opacity-40 border-gray-300 border-r-2 `}
         >
-            <h2 className="p-2 text-2xl font-semibold border-b-2 border-gray-300 border-opacity-40 sm:p-4">
+            <h2 className="p-2 text-md md:text-2xl font-semibold border-b-2 border-gray-300 border-opacity-40 sm:p-4">
                 Round {id}
             </h2>
             {disabled && <div className="absolute z-50 w-full h-full"></div>}
