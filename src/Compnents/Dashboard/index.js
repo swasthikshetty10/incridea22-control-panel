@@ -57,7 +57,7 @@ function Dashboard(props) {
                 <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
                     <Users participants={data.participants} />
-                    <Rounds participants={data.participants} />
+                    <Rounds query={query} participants={data.participants} />
                     <Winners winners={data.winners} />
                 </div>
                 <Modal />

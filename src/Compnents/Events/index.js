@@ -37,7 +37,7 @@ function Events() {
     return (
         <div className='min-h-screen bg-gray-700 text-white pt-3'  >
             <h1 className='text-center text-3xl'>
-                Your Events
+                Events you are {role === "judge" ? "Judging" : "Organising"}
             </h1>
             <div className='p-10 max-w-md mx-auto '>
                 {

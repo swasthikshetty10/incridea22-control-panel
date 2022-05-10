@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Round from "./Round";
 
-function Rounds({ participants }) {
+function Rounds({ participants, query
+}) {
   const rounds = participants[0].rounds.length;
+  const [participant, setRoundParticipants] = useState(participants)
   const cols = [
     "grid-cols-1",
     "grid-cols-2",
@@ -10,6 +12,12 @@ function Rounds({ participants }) {
     "grid-cols-4",
     "grid-cols-5",
   ];
+  useEffect(() => {
+    setRoundParticipants(participants.filter((ele) => {
+      return true && ele.pIds.some((id) => id.toLowerCase().includes(query.toLowerCase()))
+    }))
+
+  }, [query])
   return (
     <div className="text-center grow">
       <div className={"grid " + cols[rounds - 1]}>
@@ -17,7 +25,7 @@ function Rounds({ participants }) {
           <Round
             key={i}
             id={i + 1}
-            participants={participants}
+            participants={participant}
             disabled={false}
           />
         ))}
