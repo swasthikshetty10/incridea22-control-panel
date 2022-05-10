@@ -37,12 +37,12 @@ function Events() {
     }, [])
     const navigate = useNavigate()
     return (
-        <div className='min-h-screen bg-gray-700 text-white pt-3'  >
+        <div className='min-h-screen pt-9 bg-gray-700 text-white pt-3'  >
             <div className='flex gap-10 items-center justify-center'>
                 <h1 className='text-center text-3xl'>
-                    Events you are {role === "judge" ? "Judging" : "Organising"}
+                    Events you're {role === "judge" ? "judging" : "organising"}
                 </h1>
-                <LogoutBtn auth={auth} />
+                <LogoutBtn className={'text-lg px-3 py-2 absolute right-10 top-7'} auth={auth} />
             </div>
             <div className='p-10 max-w-md mx-auto '>
                 {
