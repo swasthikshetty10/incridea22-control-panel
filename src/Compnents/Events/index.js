@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
-import { getEvents, getOrganiser } from '../../firebaseConfig'
+import { auth, getEvents, getOrganiser } from '../../firebaseConfig'
+import LogoutBtn from '../../Utility/LogoutBtn'
 import RoundsModal from '../../Utility/RoundsModal'
 function Events() {
     const userCtx = useContext(AuthContext)
@@ -36,9 +37,12 @@ function Events() {
     const navigate = useNavigate()
     return (
         <div className='min-h-screen bg-gray-700 text-white pt-3'  >
-            <h1 className='text-center text-3xl'>
-                Events you are {role === "judge" ? "Judging" : "Organising"}
-            </h1>
+            <div className='flex gap-10 items-center justify-center'>
+                <h1 className='text-center text-3xl'>
+                    Events you are {role === "judge" ? "Judging" : "Organising"}
+                </h1>
+                <LogoutBtn auth={auth} />
+            </div>
             <div className='p-10 max-w-md mx-auto '>
                 {
                     !loading &&
