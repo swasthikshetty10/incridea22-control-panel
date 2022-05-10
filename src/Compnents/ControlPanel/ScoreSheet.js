@@ -37,6 +37,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     }, [query])
     useEffect(() => {
         setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
+        const docRef = doc(db, 'Events2', id)
+        // const eventDoc = await getDoc(docRef)
+        // const event = { ...eventDoc.data() }
     })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)
@@ -61,15 +64,14 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
     }
     const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
         const docRef = doc(db, 'Events2', id)
-        const eventDoc = await getDoc(docRef)
-        const event = { ...eventDoc.data() }
-        const scores = event.participants[pIndex].rounds[rIndex].scores
+        const new_participants = [...participants]
+        const scores = new_participants[pIndex].rounds[rIndex].scores
         if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
             const judgeIndex = participants[pIndex].rounds[rIndex].scores.findIndex(ele => ele.uid === uid)
             const len = scores[judgeIndex].criteria.length
             scores[judgeIndex] = { ...scores[judgeIndex], criteria: rounds[round - 1].criteria.map((_, ix) => ix === cIndex ? parseInt(score) : (len > ix ? scores[judgeIndex].criteria[ix] : 0)) }
             scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
-            event.participants[pIndex].rounds[rIndex].scores = scores
+            new_participants[pIndex].rounds[rIndex].scores = scores
         } else {
             const criteria = rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0)
             const obj = {
@@ -79,9 +81,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
             }
             scores.push(obj)
             console.log(scores)
-            event.participants[pIndex].rounds[rIndex].scores = scores
+            new_participants[pIndex].rounds[rIndex].scores = scores
         }
-        await updateDoc(docRef, event)
+        await updateDoc(docRef, { participants: new_participants })
     }
     const submitWinners = async (id, winners) => {
         const docRef = doc(db, 'Events2', id)
@@ -139,7 +141,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                                         updateScore(id, obj.index, round - 1, uid, ix, e.target.value)
                                                     }
 
-                                                } inputMode='numeric' value={
+                                                } type="number" value={
                                                     (() => {
                                                         if (participants[obj.index].rounds[round - 1].scores) {
                                                             let score = 0
@@ -155,7 +157,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
                                                         }
 
                                                     })()
-                                                } min={0} max={10} className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' type="number" />
+                                                } className='text-black p-2 h-8 w-16  focus:outline-none focus:bg-gray-100/90' />
                                             </div>)
                                     }
                                     <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-2 w-full  bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
