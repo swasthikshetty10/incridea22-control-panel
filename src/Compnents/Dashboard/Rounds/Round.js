@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { select } from "../../../firebaseConfig";
-import AddBtn from "../../../Utility/AddBtn";
 import ParticipantBtn from "./ParticipantBtn";
-
 function Round({ id, participants, disabled }) {
     const [selected, setSelected] = useState({
         roundIdx: id - 1,
