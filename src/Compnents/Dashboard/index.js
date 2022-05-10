@@ -58,7 +58,7 @@ function Dashboard(props) {
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
                     <Users participants={data.participants} />
                     <Rounds participants={data.participants} />
-                    <Winners participants={data.participants} />
+                    <Winners winners={data.winners} />
                 </div>
                 <Modal />
 
