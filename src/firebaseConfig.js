@@ -160,6 +160,16 @@ export async function getOrganiser(uid) {
     return organisers[0]
 }
 
+export async function getWinners() {
+    const winners = [];
+    const collRef = collection(db, 'Events')
+    const eventDocs = await getDocs(collRef)
+    eventDocs.forEach((event) => {
+        winners.push({ name: event.data().name, id: event.id, winner: event.data().winner })
+    })
+    return winners
+}
+
 
 
 // const organiser = {
