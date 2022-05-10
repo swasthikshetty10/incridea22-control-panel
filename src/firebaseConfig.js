@@ -160,15 +160,6 @@ export async function getOrganiser(uid) {
     return organisers[0]
 }
 
-export async function addCriteria(id, rIndex) {
-    const docRef = doc(db, 'Events2', id)
-    const eventDoc = await getDoc(docRef)
-    const event = { ...eventDoc.data() }
-    event.rounds[rIndex].criteria.push("new")
-    console.log(event.rounds[rIndex].criteria)
-    await updateDoc(docRef, event)
-
-}
 
 
 // const organiser = {
