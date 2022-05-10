@@ -8,7 +8,7 @@ import SubmitModal from '../../Utility/SubmitModal'
 import { useNavigate } from 'react-router-dom'
 import WinnerSelect from '../../Utility/WinnerSelect'
 import ParticipantsModal from '../../Utility/ParticipantsModal'
-function Users({ query, participants, round, rounds, id, uid, maxParticipants }) {
+function Users({ query, participants, round, rounds, id, uid, maxParticipants, winners }) {
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
         if (round == 1) {
             return true
@@ -224,8 +224,8 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
 
             </div>
             {
-                (rounds.length === parseInt(round) && checkbox) &&
-                <WinnerSelect id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
+                (rounds.length === parseInt(round) && (rounds[round - 1]?.completed || checkbox)) &&
+                <WinnerSelect completedWinners={winners} completed={rounds[round - 1]?.completed} id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
             }
             {partsModalOpen && clickedPIds.length > 2 && <ParticipantsModal isJudge set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
 
