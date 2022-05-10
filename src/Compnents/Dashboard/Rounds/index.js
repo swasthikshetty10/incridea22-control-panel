@@ -17,7 +17,7 @@ function Rounds({ participants, query
       return true && ele.pIds.some((id) => id.toLowerCase().includes(query.toLowerCase()))
     }))
 
-  }, [query])
+  }, [query, participants])
   return (
     <div className="text-center grow">
       <div className={"grid " + cols[rounds - 1]}>
