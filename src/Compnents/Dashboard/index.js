@@ -5,6 +5,7 @@ import Modal from './Rounds/Modal'
 import Users from './Users'
 import SearchBar from '../../Utility/SearchBar'
 import Winners from './Winners'
+import {IoIosArrowBack} from 'react-icons/io'
 import {
     collection, onSnapshot
 } from 'firebase/firestore'
@@ -47,8 +48,9 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white p-5 bg-gray-900">
                 <div className='flex pt-2 pb-2 justify-between items-start '>
-                    <div className=''>
-                        <h1 className='text-4xl capitalize '>{data.name}</h1>
+                    <div onClick={() => navigator(-1)} className='flex gap-3 items-center mb-2 hover:gap-4 hover:opacity-70 transition-all cursor-pointer'>
+                        <IoIosArrowBack className='text-3xl ' />
+                        <h1 className='text-4xl capitalize'>{data.name}</h1>
                     </div>
                     <div className='inline-flex gap-3'>
                         <SearchBar query={query} setQuery={setQuery} />
