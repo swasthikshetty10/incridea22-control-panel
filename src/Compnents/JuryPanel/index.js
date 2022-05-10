@@ -14,9 +14,12 @@ function Dashboard(props) {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
+
+    
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id, round } = useParams()
+    const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round-1].judges.uid)
     useEffect(() => {
         const colRef = collection(db, "Events2")
         if (userCtx) {
@@ -38,20 +41,33 @@ function Dashboard(props) {
         }
 
     }, [])
+    console.log(selectedJudge);
     return (<>
         {loading ? <div>Loading</div> :
             <div className="w-full px-5 relative  text-white pt-4 ">
-                <div className='flex pt-2 pb-1 justify-between items-start '>
+                <div className='flex pt-2 pb-1 justify-between items-center mb-2 '>
                     <div className=''>
                         <h1 className='text-4xl capitalize '>{data.name}</h1>
-                        <div className='text-gray-300  text-md'>{`Round ${round}`}</div>
+                        <div className='text-gray-300  text-md'>{`Round ${round}`} 
+                        {data.rounds[round - 1].completed && <span className='text-green-500 text-lg ml-2 font-semibold'>(Event Completed)</span>}
+                        </div>
+                    </div>
+                    <div className='flex items-center gap-2 bg-gray-700 p-2 pl-3 rounded-md'>
+                        <p className='font-semibold'>Select Judge: </p>
+                        <select class=" block w-80 px-2 py-1.5 text-base bg-gray-600 rounded transition ease-in-out m-0  focus:bg-gray-600/100 text-white  backdrop-blur focus:border-blue-600 outline-none focus:ring-0  focus:outline-none" value={selectedJudge} onChange={(e) => setSelectedJudge(e.target.value)}>
+                            {
+                                data.rounds[round-1].judges.map(judge => (
+                                    <option className='p-2' value={judge.uid}>{judge.name}</option>
+                                ))
+                            }
+                        </select>
                     </div>
                     <div className='inline-flex gap-3'>
                         <SearchBar query={query} setQuery={setQuery} />
                         <LogoutBtn auth={auth} />
                     </div>
                 </div>
-                <ScoreSheet maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={userCtx.currentUser.uid} rounds={data.rounds} round={round} />
+                <ScoreSheet winners={data.winners} maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={selectedJudge} rounds={data.rounds} round={round} />
             </div>
 
         }

@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  Navigate
 } from "react-router-dom";
 import { getOrganiser } from "./firebaseConfig";
 import Login from "./Compnents/Login";
@@ -44,6 +45,7 @@ function App() {
             <Route exact path="/jury/dashboard/:id/:round" element={<Jury />} />
             <Route path="/organiser/dashboard/:id" element={<Dashboard />} />
             <Route path="/winners" element={<WinnersList />} />
+            <Route path="*" element={<Navigate to={'/'} />} />
           </Routes>
         </ModalContext>
       </AuthProvider>

@@ -6,7 +6,7 @@ import { TiDelete } from 'react-icons/ti'
 import Modal from '../../Utility/RemoveModal'
 import SubmitModal from '../../Utility/SubmitModal'
 import { useNavigate } from 'react-router-dom'
-import WinnerSelect from '../../Utility/WinnerSelect'
+import WinnerSelect from './WinnerSelect'
 import ParticipantsModal from '../../Utility/ParticipantsModal'
 function Users({ query, participants, round, rounds, id, uid, maxParticipants, winners }) {
     const [roundParticipants, setRoundParticipants] = useState(participants.filter((ele) => {
@@ -98,7 +98,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
         <div className='flex justify-center item-center overflow-hidden'>
             <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
                 <div className='pb-2'>
-                    <div className={`${rounds[round - 1].completed && 'opacity-50'} h-[75vh] tablescroll   overflow-y-scroll  w-full`}>
+                    <div className={` h-[75vh] tablescroll   overflow-y-scroll  w-full`}>
                         {roundParticipants.length ?
 
                             roundParticipants.map((obj, index) => <>
@@ -208,8 +208,8 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
             </div>
             {
-                (rounds.length === parseInt(round) && (rounds[round - 1]?.completed || checkbox)) &&
-                <WinnerSelect completedWinners={winners} completed={rounds[round - 1]?.completed} id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
+                rounds.length === parseInt(round) &&
+                <WinnerSelect winner={winners} completed={rounds[round - 1]?.completed} id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
             }
             {partsModalOpen && clickedPIds.length > 2 && <ParticipantsModal isJudge set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
 
