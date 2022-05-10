@@ -9,7 +9,7 @@ function ParticipantBtn({ selected, setSelected, pIds, round, teamName }) {
        <>
        {modal && <ParticipantsModal set={modal} onClose={() => setModal(false)} pIds={pIds} />}
             <div onClick={() => setModal(true)} 
-            className="bg-gray-700 hover:bg-opacity-50 min-w-[5rem]  cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-center ">
+            className="bg-gray-700 hover:bg-opacity-50 min-w-fit  cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-center ">
                 <div className='flex-col gap-3  w-full  '>
                 {
                     pIds.length > 4 ?
