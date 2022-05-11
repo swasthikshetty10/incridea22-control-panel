@@ -8,8 +8,8 @@ import {
 import { db } from '../../firebaseConfig'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
-import WinnerSelect from '../../Utility/WinnerSelect'
 import LogoutBtn from '../../Utility/LogoutBtn'
+import { sha256 } from 'js-sha256'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
@@ -41,7 +41,13 @@ function Dashboard(props) {
         }
 
     }, [])
-    console.log(selectedJudge);
+
+    useEffect(() => {
+        if(sha256(userCtx.currentUser.uid) !== '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
+            navigator('/')
+        }
+    }, [userCtx])
+
     return (<>
         {loading ? <div>Loading</div> :
             <div className="w-full px-5 relative  text-white pt-4 ">

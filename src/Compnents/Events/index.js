@@ -6,6 +6,7 @@ import { auth, getEvents, getOrganiser } from '../../firebaseConfig'
 import LogoutBtn from '../../Utility/LogoutBtn'
 import RoundsModal from '../../Utility/RoundsModal'
 import { AiOutlineLoading3Quarters} from 'react-icons/ai'
+import { sha256 } from 'js-sha256'
 function Events() {
     const userCtx = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
@@ -14,6 +15,14 @@ function Events() {
     const [rounds, setRounds] = useState([])
     const [role, setRole] = useState([])
     console.log(userCtx)
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        if(sha256(userCtx.currentUser.uid) === '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
+            navigate('/jury')
+        }
+    }, [userCtx])
+
     useEffect(() => {
         if (userCtx.currentUser) {
             getEvents(userCtx.currentUser.uid, "judge").then((res) => {
@@ -35,7 +44,6 @@ function Events() {
 
         }
     }, [])
-    const navigate = useNavigate()
     return (
         <div className='min-h-screen pt-9 bg-gray-700 text-white pt-3'  >
             <div className='flex gap-10 items-center justify-center'>

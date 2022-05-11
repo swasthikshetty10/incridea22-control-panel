@@ -13,7 +13,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
-    const eventName = "capture the flag"
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
     const userCtx = useContext(AuthContext)
