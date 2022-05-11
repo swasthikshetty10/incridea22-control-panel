@@ -30,17 +30,17 @@ function Users({ participants, events }) {
                         participants.map((obj, index) =>
                             <div key={index} className="group bg-gray-700 relative hover:bg-gray-500 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                 <div className='items-end grow flex flex-col  w-min '>
-                                    <div onClick={() => {
+                                    {!events.rounds[0].completed && <div onClick={() => {
                                         setSelectedIndex(obj.index)
                                         setSelectedPIds(obj.pIds)
                                         setDeleteModalOpen(true)
-                                        }} className='hidden top-0 right-0 rounded-sm absolute group-hover:block bg-red-500 p-1 m-0 '>
+                                    }} className='hidden top-0 right-0 rounded-sm absolute group-hover:block bg-red-500 p-1 m-0 '>
                                         <AiOutlineDelete className='text-white text-2xl opacity-100' />
-                                    </div>
-                                    {obj.pIds.map((pid, index) => 
-                                    <div key={index} className='items-center bg-gray-500 whitespace-nowrap p-2 bg-opacity-20 inline-flex flex-nowrap my-1 justify-between w-full '>
-                                        {pid}
-                                    </div>
+                                    </div>}
+                                    {obj.pIds.map((pid, index) =>
+                                        <div key={index} className='items-center bg-gray-500 whitespace-nowrap p-2 bg-opacity-20 inline-flex flex-nowrap my-1 justify-between w-full '>
+                                            {pid}
+                                        </div>
                                     )}
                                 </div>
                             </div>)}
@@ -48,7 +48,7 @@ function Users({ participants, events }) {
                 </div>
             </div>
             {modal && <RegisterUser set={modal} onClose={() => { setModal(false) }} events={events} />}
-            {deleteModalOpen && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={onConfirm} pIds={selectedPIds} selectedIndex={selectedIndex} />}
+            {(deleteModalOpen && !events.rounds[0].completed) && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={onConfirm} pIds={selectedPIds} selectedIndex={selectedIndex} />}
         </div>
     )
 }
