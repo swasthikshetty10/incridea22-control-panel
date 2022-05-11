@@ -53,7 +53,6 @@ function RegisterModal({ set, onClose, events }) {
         final_obj.index = participants.length
         participants.push(final_obj)
         await updateDoc(docRef, { participants })
-        alert("Registered User")
         onClose();
     }
     useEffect(() => {
