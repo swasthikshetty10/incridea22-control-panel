@@ -19,12 +19,8 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
     }))
     const [clickedPIds, setClickedPIds] = useState([])
-    const [judge, setJudge] = useState(rounds[0].judges)
-    const [modal, setModal] = useState(false)
-    const [submit, setSubmit] = useState(false)
-    const [checkbox, setCheckbox] = useState(false)
+    
     const [partsModalOpen, setPartsModalOpen] = useState(false)
-    const [count, setCount] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
         setRoundParticipants(participants.filter((ele) => {
@@ -39,57 +35,17 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
         }))
 
     }, [query])
-    useEffect(() => {
-        setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
-    })
-    const selectParticipant = async (id, pIndex, rIndex, value) => {
-        const docRef = doc(db, 'Events2', id)
-        const new_participants = [...participants]
-        new_participants[pIndex].rounds[rIndex].selected = value
-        await updateDoc(docRef, { participants: new_participants })
-    }
+
+    
     const submitRound = async (id, rIndex) => {
         const docRef = doc(db, 'Events2', id)
         const new_rounds = [...rounds]
         new_rounds[rIndex].completed = true
         await updateDoc(docRef, { rounds: new_rounds })
     }
-    async function addCriteria(id, rIndex) {
-        const docRef = doc(db, 'Events2', id)
-        const new_rounds = [...rounds]
-        new_rounds[rIndex].criteria.push("new")
-        await updateDoc(docRef, { rounds: new_rounds })
-    }
 
-    const deleteCriteria = async (id, rIndex) => {
-        const docRef = doc(db, 'Events2', id)
-        const new_rounds = [...rounds]
-        new_rounds[rIndex].criteria.pop()
-        await updateDoc(docRef, { rounds: new_rounds })
-    }
-    const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
-        const docRef = doc(db, 'Events2', id)
-        const new_participants = [...participants]
-        const scores = new_participants[pIndex].rounds[rIndex].scores
-        if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
-            const judgeIndex = participants[pIndex].rounds[rIndex].scores.findIndex(ele => ele.uid === uid)
-            const len = scores[judgeIndex].criteria.length
-            scores[judgeIndex] = { ...scores[judgeIndex], criteria: rounds[round - 1].criteria.map((_, ix) => ix === cIndex ? parseInt(score) : (len > ix ? scores[judgeIndex].criteria[ix] : 0)) }
-            scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
-            new_participants[pIndex].rounds[rIndex].scores = scores
-        } else {
-            const criteria = rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0)
-            const obj = {
-                uid,
-                criteria,
-                total: criteria.reduce((a, b) => a + b, 0)
-            }
-            scores.push(obj)
-            console.log(scores)
-            new_participants[pIndex].rounds[rIndex].scores = scores
-        }
-        await updateDoc(docRef, { participants: new_participants })
-    }
+
+
     const submitWinners = async (id, winners) => {
         const docRef = doc(db, 'Events2', id)
         await updateDoc(docRef, { winners: winners })
@@ -114,11 +70,12 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                             rounds[round - 1].criteria.map((name, ix) =>
 
                                                 <div key={`${ix}c`} className='whitespace-nowrap md:basis-1/7 p-3 group text-center'>
-                                                    {
-                                                        rounds[round - 1].criteria.length - 1 === ix ? <div className='flex gap-[2px]   items-center cursor-pointer '><span >Criteria {ix + 1}</span><button onClick={() => { setModal(true) }} className='hidden group-hover:block transformease-linear duration-400 text-red-600 text-xl'><TiDelete /></button></div> : <span>Criteria {ix + 1} </span>
-                                                    }
+                                                    <span>Criteria {ix + 1} </span>
                                                 </div>)
                                         }
+                                        <div className='whitespace-nowrap grow p-3 group text-center'>
+                                            <span>Total </span>
+                                        </div>
 
                                     </div>
                                 }
@@ -170,7 +127,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                                 </div>
                                             </div>)
                                     }
-                                    <div className={` ${!checkbox ? " select-none  " : "opacity-100"}  inline-flex mr-3 gap-1   hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
+                                    <div className={` select-none   inline-flex mr-3 gap-1   hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
                                         <span className='py-4 px-5 bg-gray-700 w-16'>{
                                             (() => {
                                                 try {
@@ -181,14 +138,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
                                             })()
                                         }</span>
-                                        {checkbox && <div className='p-4  bg-gray-700 ml-2'>{rounds.length != parseInt(round) &&
-                                            <CheckBox onChange={() => { selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }}
-                                                checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />}
-                                        </div>}
                                     </div>
                                 </div>
                             </>
-
                             ) :
                             <div className='text-center p-10 font-light text-3xl text-gray-500'>No participants found! </div>
                         }
@@ -196,15 +148,11 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                 </div>
 
                 <div className='flex justify-end gap-5 mb-3 mr-3'>
-                    <button onClick={() => { navigate("/jury") }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
+                    <button onClick={() => { navigate(-1) }} className="flex items-center justify-between px-5 py-2 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 hover:shadow-lg focus:outline-none">
                         Go Back
                     </button>
 
                 </div>
-
-                {rounds.length != parseInt(round) && <SubmitModal set={submit} onSubmit={() => { submitRound(id, round - 1); setSubmit(false) }} onClose={() => { setSubmit(false) }} />
-                }
-                <Modal set={modal} onDelete={() => { deleteCriteria(id, round - 1); setModal(false) }} onClose={() => { setModal(false) }} />
 
             </div>
             {

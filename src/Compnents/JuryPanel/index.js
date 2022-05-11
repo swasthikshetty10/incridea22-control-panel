@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import LogoutBtn from '../../Utility/LogoutBtn'
 import { sha256 } from 'js-sha256'
+import { IoIosArrowBack } from 'react-icons/io'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
@@ -52,25 +53,30 @@ function Dashboard(props) {
         {loading ? <div>Loading</div> :
             <div className="w-full px-5 relative  text-white pt-4 ">
                 <div className='flex pt-2 pb-1 justify-between items-center mb-2 '>
-                    <div className=''>
-                        <h1 className='text-4xl capitalize '>{data.name}</h1>
-                        <div className='text-gray-300  text-md'>{`Round ${round}`} 
-                        {data.rounds[round - 1].completed && <span className='text-green-500 text-lg ml-2 font-semibold'>(Event Completed)</span>}
+                    <div onClick={() => navigator(-1)} className='flex flex-row gap-3 hover:opacity-70 transition-all cursor-pointer hover:gap-4 items-center'>
+                        <IoIosArrowBack className='text-3xl ' />
+                        <div>
+                            <h1 className='text-4xl capitalize '>{data.name}</h1>
+                            <div className='text-gray-300  text-md'>{`Round ${round}`} 
+                            {data.rounds[round - 1].completed && <span className='text-green-500 text-lg ml-2 font-semibold'>(Event Completed)</span>}
+                            </div>
                         </div>
                     </div>
-                    <div className='flex items-center gap-2 bg-gray-700 p-2 pl-3 rounded-md'>
-                        <p className='font-semibold'>Select Judge: </p>
-                        <select class=" block w-80 px-2 py-1.5 text-base bg-gray-600 rounded transition ease-in-out m-0  focus:bg-gray-600/100 text-white  backdrop-blur focus:border-blue-600 outline-none focus:ring-0  focus:outline-none" value={selectedJudge} onChange={(e) => setSelectedJudge(e.target.value)}>
-                            {
-                                data.rounds[round-1].judges.map(judge => (
-                                    <option className='p-2' value={judge.uid}>{judge.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-                    <div className='inline-flex gap-3'>
-                        <SearchBar query={query} setQuery={setQuery} />
-                        <LogoutBtn auth={auth} />
+                    <div className='flex flex-col md:flex-row gap-5 items-center'>
+                        <div className='flex items-center gap-2 bg-gray-700 p-2 pl-3 rounded-md'>
+                            <p className='font-semibold'>Select Judge: </p>
+                            <select class=" block w-80 px-2 py-1.5 text-base bg-gray-600 rounded transition ease-in-out m-0  focus:bg-gray-600/100 text-white  backdrop-blur focus:border-blue-600 outline-none focus:ring-0  focus:outline-none" value={selectedJudge} onChange={(e) => setSelectedJudge(e.target.value)}>
+                                {
+                                    data.rounds[round-1].judges.map(judge => (
+                                        <option className='p-2' value={judge.uid}>{judge.name}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className='inline-flex gap-3'>
+                            <SearchBar query={query} setQuery={setQuery} />
+                            <LogoutBtn auth={auth} />
+                        </div>
                     </div>
                 </div>
                 <ScoreSheet winners={data.winners} maxParticipants={data.maxParticipants} query={query} participants={data.participants} id={data.id} uid={selectedJudge} rounds={data.rounds} round={round} />
