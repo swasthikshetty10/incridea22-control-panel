@@ -28,7 +28,7 @@ function Users({ participants, events }) {
                     {
                         participants.map((obj, index) =>
                             <div key={index} className="group bg-gray-700 relative hover:bg-gray-500 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
-                                <div className='items-end grow flex flex-col  w-min '>
+                                <div className=' grow flex flex-col  w-min '>
                                     {!events.rounds[0].completed && <div onClick={() => {
                                         setSelectedIndex(obj.index)
                                         setSelectedPIds(obj.pIds)

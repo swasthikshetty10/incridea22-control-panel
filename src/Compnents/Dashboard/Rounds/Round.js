@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { select } from "../../../firebaseConfig";
 import ParticipantBtn from "./ParticipantBtn";
+
 function Round({ id, participants, disabled }) {
     const [selected, setSelected] = useState({
         roundIdx: id - 1,
         pIds: new Set(),
     });
     console.log(selected);
-    const handleSave = () => {
-        select("capture the flag", selected.pIds, selected.roundIdx);
-    };
     return (
         <div
             key={id}

@@ -40,7 +40,12 @@ function RegisterModal({ set, onClose, events }) {
                 alert(`Invalid PID ${pId}`)
                 return
             }
+            if (events.participants.some(ele => ele.pIds.some(p => p === pId))) {
+                alert(`${pId} already registered`)
+                return
+            }
         }
+
         let final_obj = { ...participant }
         final_obj.pIds = final_pIds
         const docRef = doc(db, 'Events2', events.id)
@@ -76,18 +81,18 @@ function RegisterModal({ set, onClose, events }) {
                         {Array.from(Array(events.maxParticipants).keys()).map((key) =>
                             <div className='flex flex-col items-start'>
                                 <label>{`Participant ${key + 1}`}</label>
-                                <input 
+                                <input
                                     defaultValue={'INC-2022-'}
-                                onChange={(e) => {
-                                    setparticipant((prev) => {
-                                        let new_pIds = [...prev.pIds]
-                                        new_pIds[key] = e.target.value.toUpperCase().trim()
-                                        return {
-                                            ...prev, pIds: new_pIds
+                                    onChange={(e) => {
+                                        setparticipant((prev) => {
+                                            let new_pIds = [...prev.pIds]
+                                            new_pIds[key] = e.target.value.toUpperCase().trim()
+                                            return {
+                                                ...prev, pIds: new_pIds
+                                            }
                                         }
-                                    }
-                                    )
-                                }} className='text-black p-3 mb-2' placeholder={`Enter Participant ${key + 1} PID`} type="text" />
+                                        )
+                                    }} className='text-black p-3 mb-2' placeholder={`Enter Participant ${key + 1} PID`} type="text" />
                             </div>
                         )}
                     </div>
