@@ -2,12 +2,21 @@ import React, { useState } from 'react'
 import RegisterUser from './RegisterUser'
 import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai'
 import DeleteModal from './DeleteModal'
+import { db } from '../../firebaseConfig'
+import { doc, updateDoc } from 'firebase/firestore'
 
 function Users({ participants, events }) {
     const [modal, setModal] = useState(true)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const [selectedPIds, setSelectedPIds] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)
+
+    const onConfirm = async (index) => {
+        const docRef = doc(db, 'Events2', events.id)
+        const new_participants = participants.filter(ele => ele.index != index).map((ele, ix) => { ele.index = ix; return ele })
+        await updateDoc(docRef, { participants: new_participants })
+    }
+
     return (
         <div className='h-full text-center  border-opacity-40 border-gray-300 border-r-2 '>
             <h2 className='font-semibold flex justify-between gap-3 items-center border-b-2 p-2 border-opacity-40 border-gray-300  sm:p-4 text-2xl'>Participants
@@ -39,7 +48,7 @@ function Users({ participants, events }) {
                 </div>
             </div>
             {modal && <RegisterUser set={modal} onClose={() => { setModal(false) }} events={events} />}
-            {deleteModalOpen && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} deleteFn={() => {}} pIds={selectedPIds} />}
+            {deleteModalOpen && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={onConfirm} pIds={selectedPIds} selectedIndex={selectedIndex} />}
         </div>
     )
 }

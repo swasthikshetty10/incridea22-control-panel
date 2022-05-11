@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
-function DeleteModal({ set, onClose, pIds, deleteFn}) {
+function DeleteModal({ set, onClose, pIds, onConfirm, selectedIndex}) {
 
     const [loading, setLoading] = useState(false)
 
@@ -9,7 +9,7 @@ function DeleteModal({ set, onClose, pIds, deleteFn}) {
         <>
             <div
                 className={`${set ? 'flex' : 'hidden'
-                    }  backdrop-blur-sm fixed top-0 right-0 z-[999] justify-center   w-full bg-red-800/50 h-screen overflow-auto`}
+                    }  backdrop-blur-sm fixed top-0 right-0 z-[999] justify-center   w-full bg-gray-800/50 h-screen overflow-auto`}
             >
                 <div className=' w-[90vw] md:w-[50vw] xl:w-[30vw] my-10 h-fit  bg-gray-900/75 backdrop-blur-md text-center rounded-xl text-white '>
                     <div className='sticky top-0 bg-gray-800 p-5 flex items-center justify-between mb-3 border-b border-gray-600'>
@@ -23,10 +23,10 @@ function DeleteModal({ set, onClose, pIds, deleteFn}) {
                     <div className='flex  py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-center '>
                         <button onClick={async () => {
                             setLoading(true)
-                            await deleteFn()
+                            await onConfirm(selectedIndex)
                             setLoading(false)
 														onClose()
-                        }} disabled={loading} className='disabled:opacity-70 px-3 py-2 rounded-md border-2 hover:bg-red-600 border-red-500'>Submit</button>
+                        }} disabled={loading} className='disabled:opacity-70 px-3 py-2 disabled:cursor-default rounded-md border-2 hover:bg-red-600 border-red-500'>{loading? 'Deleting...' : 'Delete'}</button>
 
                     </div>
                 </div>
