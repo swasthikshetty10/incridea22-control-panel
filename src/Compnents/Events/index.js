@@ -55,24 +55,24 @@ function Events() {
             <div className='p-10 max-w-md mx-auto '>
                 {
                     !loading ?
-                    events.map((ele, key) => {
-                        return <div onClick={() => {
-                            if (role === "judge") {
-                                setRounds(ele.rounds.map((e, i) => ({ ...e, round: i + 1, id: ele.id })).filter((item) => { console.log(item); return item.judges.some((e) => e.uid === userCtx.currentUser.uid) }));
-                                setModal(true)
-                            } else {
-                                navigate(`/organiser/dashboard/${ele.id}`)
-                            }
-                        }} key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
-                            <span>
-                                {ele.name}
-                            </span>
-                        </div>
-                    })
-                    :
-                    <>
-                        <AiOutlineLoading3Quarters className="mx-auto mt-[20vh] animate-spin text-5xl " />
-                    </>
+                        events.map((ele, key) => {
+                            return <div onClick={() => {
+                                if (role === "judge") {
+                                    setRounds(ele.rounds.map((e, i) => ({ ...e, round: i + 1, id: ele.id })).filter((item) => { console.log(item); return item.judges.some((e) => e.uid === userCtx.currentUser.uid) }));
+                                    setModal(true)
+                                } else {
+                                    navigate(`/organiser/dashboard/${ele.id}`)
+                                }
+                            }} key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
+                                <span>
+                                    {ele.name}
+                                </span>
+                            </div>
+                        })
+                        :
+                        <>
+                            <AiOutlineLoading3Quarters className="mx-auto mt-[20vh] animate-spin text-5xl " />
+                        </>
                 }
                 {role === "judge" && <RoundsModal role={role} set={modal} rounds={rounds} onClose={() => { setModal(false) }} />}
             </div>

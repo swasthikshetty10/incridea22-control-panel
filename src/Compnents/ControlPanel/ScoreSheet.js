@@ -24,6 +24,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
     const [checkbox, setCheckbox] = useState(false)
     const [partsModalOpen, setPartsModalOpen] = useState(false)
     const [count, setCount] = useState(0)
+    const [pIndex, setPIndex] = useState(null)
     const navigate = useNavigate()
     useEffect(() => {
         setRoundParticipants(participants.filter((ele) => {
@@ -41,6 +42,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
     useEffect(() => {
         setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
     })
+
     const selectParticipant = async (id, pIndex, rIndex, value) => {
         const docRef = doc(db, 'Events2', id)
         const new_participants = [...participants]
@@ -126,22 +128,22 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                 }
 
                                 <div className={`${rounds[round - 1].completed && 'pointer-events-none '}  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-8`} key={`${index}cp`}>
-                                    <div onClick={() => {setClickedPIds(obj.pIds); setPartsModalOpen(true)}} className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
+                                    <div onClick={() => { setPIndex(obj.index); setClickedPIds(obj.pIds); setPartsModalOpen(true) }} className="pointer-events-auto  md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                         <div className='flex-col gap-3 w-full  '>
                                             <div className=' bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
                                                 {
                                                     obj.pIds.length > 4 ?
-                                                     obj.teamName :                            
+                                                        obj.teamName :
                                                         <div>
                                                             {obj.pIds.length > 1 && <span className='font-semibold capitalize text-blue-300'>{obj.teamName}</span>}
                                                             {
-                                                                obj.pIds.map((pid, idx) => 
-                                                                <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
-                                                                    {pid}
-                                                                </div>)
+                                                                obj.pIds.map((pid, idx) =>
+                                                                    <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                                                        {pid}
+                                                                    </div>)
                                                             }
                                                         </div>
-                 
+
                                                 }
                                             </div>
                                         </div>
@@ -186,9 +188,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
                                             })()
                                         }</span>
-                                        {checkbox && <div className='p-4  bg-gray-700 ml-2'>{rounds.length != parseInt(round) && 
-                                            <CheckBox onChange={() => { selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }} 
-                                            checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />}
+                                        {checkbox && <div className='p-4  bg-gray-700 ml-2'>{rounds.length != parseInt(round) &&
+                                            <CheckBox onChange={() => { selectParticipant(id, obj.index, round - 1, !participants[obj.index].rounds[round - 1].selected) }}
+                                                checked={participants[obj.index].rounds[round - 1].selected} disabled={!checkbox} />}
                                         </div>}
                                     </div>
                                 </div>
@@ -227,7 +229,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                 (rounds.length === parseInt(round) && (rounds[round - 1]?.completed || checkbox)) &&
                 <WinnerSelect completedWinners={winners} completed={rounds[round - 1]?.completed} id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
             }
-            {partsModalOpen && clickedPIds.length > 2 && <ParticipantsModal isJudge set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
+            {partsModalOpen && <ParticipantsModal {...{ pIndex, rIndex: round - 1, uid, id, round, rounds, participantArr: participants }} isJudge set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
 
         </div>
     )
