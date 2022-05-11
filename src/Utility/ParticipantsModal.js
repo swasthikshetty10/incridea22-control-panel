@@ -9,7 +9,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
   const [runners, setRunners] = useState([])
   const [loading, setLoading] = useState(false)
   const [typing, setTyping] = useState(false)
-  const [comment, setComment] = useState((() => {
+  const [comment, setComment] = useState(isJudge ? (() => {
     if (participantArr[pIndex].rounds[round - 1].scores) {
       let comment = ""
       if (participantArr[pIndex].rounds[round - 1].scores.length > 0) {
@@ -24,7 +24,21 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
       }
     }
 
-  })())
+  })() : "")
+  useEffect(() => {
+    if (isJudge) {
+
+      setTyping(true)
+      const delayDebounceFn = setTimeout(() => {
+        console.log(comment)
+        updateComment(participantArr)
+        setTyping(false)
+      }, 1000)
+      return () => clearTimeout(delayDebounceFn)
+    }
+  }, [comment])
+
+
   const updateComment = async (participants) => {
     const docRef = doc(db, 'Events2', id)
     const new_participants = [...participants]
@@ -49,15 +63,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
     }
     await updateDoc(docRef, { participants: new_participants })
   }
-  useEffect(() => {
-    setTyping(true)
-    const delayDebounceFn = setTimeout(() => {
-      console.log(comment)
-      updateComment(participantArr)
-      setTyping(false)
-    }, 1000)
-    return () => clearTimeout(delayDebounceFn)
-  }, [comment])
+
   async function getParticipants(pIds) {
     setLoading(true)
     const participants = [];
