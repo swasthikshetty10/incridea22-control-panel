@@ -74,7 +74,7 @@ function WinnersList() {
                 </span>
               </label>
             </div>
-            <div className='h-[65vh] overflow-auto'>
+            <div className='tablescroll h-[65vh] overflow-auto'>
               {searchResults.map((event, idx) => {
                 return (
                   <div

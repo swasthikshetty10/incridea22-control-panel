@@ -201,19 +201,11 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
                         </div>
                       ))}
                     </div>
-                    <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
-                      <button
-                        onClick={onClose}
-                        className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
-                      >
-                        Close
-                      </button>
-                    </div>
                   </> :
                   <div className='h-[25vh] text-lg text-gray-400 font-light flex justify-center items-center'>
                     <p>No Winner Details Found!</p>
                   </div>}
-                <p className='text-xl text-gray-300 font-bold uppercase text-left mx-4'>Runner Ups</p>
+                <p className='mt-5 text-xl text-gray-300 font-bold uppercase text-left mx-4'>Runner Ups</p>
                 <hr className=' mx-4 border-gray-400' />
                 {
                   runners?.length ?
@@ -234,20 +226,12 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
                           </div>
                         ))}
                       </div>
-                      <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
-                        <button
-                          onClick={onClose}
-                          className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
-                        >
-                          Close
-                        </button>
-                      </div>
                     </> :
                     <div className='h-[25vh] text-lg text-gray-400 font-light flex justify-center items-center'>
                       <p>No Runner Up Details Found!</p>
                     </div>
                 }
-                <p className='text-xl text-gray-300 font-bold uppercase text-left mx-4'>Second Runner Ups</p>
+                <p className='mt-5 text-xl text-gray-300 font-bold uppercase text-left mx-4'>Second Runner Ups</p>
                 <hr className=' mx-4 border-gray-400' />
                 {
                   secondRunners?.length ?
@@ -268,14 +252,6 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
                           </div>
                         ))}
                       </div>
-                      <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
-                        <button
-                          onClick={onClose}
-                          className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
-                        >
-                          Close
-                        </button>
-                      </div>
                     </> :
                     <div className='h-[25vh] text-lg text-gray-400 font-light flex justify-center items-center'>
                       <p>No Second Runner Up Details Found!</p>
@@ -287,6 +263,15 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
               <div className='h-[70vh] flex justify-center items-center'>
                 <AiOutlineLoading3Quarters className='animate-spin text-4xl text-white' />
               </div>}
+              <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
+                        <button
+                          onClick={onClose}
+                          className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
+                        >
+                          Close
+                        </button>
+                      </div>
+
           </div>
         </div>
       </>
