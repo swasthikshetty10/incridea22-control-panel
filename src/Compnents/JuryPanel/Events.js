@@ -16,7 +16,7 @@ function Events() {
     const [role, setRole] = useState([])
     console.log(userCtx)
     async function getAllEvents() {
-        const eventColRef = collection(db, 'Events2')
+        const eventColRef = collection(db, 'Events')
         const events = []
         const eventsRef = await getDocs(eventColRef)
         eventsRef.forEach((event) => {

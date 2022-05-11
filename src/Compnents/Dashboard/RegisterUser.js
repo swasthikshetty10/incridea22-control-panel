@@ -48,7 +48,7 @@ function RegisterModal({ set, onClose, events }) {
 
         let final_obj = { ...participant }
         final_obj.pIds = final_pIds
-        const docRef = doc(db, 'Events2', events.id)
+        const docRef = doc(db, 'Events', events.id)
         let participants = [...events.participants]
         final_obj.index = participants.length
         participants.push(final_obj)

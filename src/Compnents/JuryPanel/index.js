@@ -16,13 +16,13 @@ function Dashboard(props) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
 
-    
+
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id, round } = useParams()
-    const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round-1].judges.uid)
+    const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round - 1].judges.uid)
     useEffect(() => {
-        const colRef = collection(db, "Events2")
+        const colRef = collection(db, "Events")
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
@@ -44,7 +44,7 @@ function Dashboard(props) {
     }, [])
 
     useEffect(() => {
-        if(sha256(userCtx.currentUser.uid) !== '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
+        if (sha256(userCtx.currentUser.uid) !== '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
             navigator('/')
         }
     }, [userCtx])
@@ -57,8 +57,8 @@ function Dashboard(props) {
                         <IoIosArrowBack className='text-3xl ' />
                         <div>
                             <h1 className='text-4xl capitalize '>{data.name}</h1>
-                            <div className='text-gray-300  text-md'>{`Round ${round}`} 
-                            {data.rounds[round - 1].completed && <span className='text-green-500 text-lg ml-2 font-semibold'>(Event Completed)</span>}
+                            <div className='text-gray-300  text-md'>{`Round ${round}`}
+                                {data.rounds[round - 1].completed && <span className='text-green-500 text-lg ml-2 font-semibold'>(Event Completed)</span>}
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ function Dashboard(props) {
                             <p className='font-semibold'>Select Judge: </p>
                             <select class=" block w-80 px-2 py-1.5 text-base bg-gray-600 rounded transition ease-in-out m-0  focus:bg-gray-600/100 text-white  backdrop-blur focus:border-blue-600 outline-none focus:ring-0  focus:outline-none" value={selectedJudge} onChange={(e) => setSelectedJudge(e.target.value)}>
                                 {
-                                    data.rounds[round-1].judges.map(judge => (
+                                    data.rounds[round - 1].judges.map(judge => (
                                         <option className='p-2' value={judge.uid}>{judge.name}</option>
                                     ))
                                 }

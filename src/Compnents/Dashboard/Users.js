@@ -11,7 +11,7 @@ function Users({ participants, events }) {
     const [selectedPIds, setSelectedPIds] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)
     const onConfirm = async (index) => {
-        const docRef = doc(db, 'Events2', events.id)
+        const docRef = doc(db, 'Events', events.id)
         const new_participants = participants.filter(ele => ele.index != index).map((ele, ix) => { ele.index = ix; return ele })
         await updateDoc(docRef, { participants: new_participants })
     }

@@ -50,7 +50,7 @@ export async function getEvent(id) {
 }
 
 export async function getEvents(uid, role) {
-    const collRef = collection(db, 'Events2')
+    const collRef = collection(db, 'Events')
     const q = query(collRef, where(`roles.${uid}`, "==", role))
     const querySnaphshot = await getDocs(q)
     const data = []
@@ -162,7 +162,7 @@ export async function getOrganiser(uid) {
 
 export async function getWinners() {
     const winners = [];
-    const collRef = collection(db, 'Events2')
+    const collRef = collection(db, 'Events')
     const eventDocs = await getDocs(collRef)
     eventDocs.forEach((event) => {
         winners.push({ name: event.data().name, id: event.id, winner: event.data().winners, completed: event.data().completed })

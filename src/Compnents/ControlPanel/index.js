@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, getEvent, getOrganiser } from '../../firebaseConfig'
-import { IoIosArrowBack} from 'react-icons/io'
+import { IoIosArrowBack } from 'react-icons/io'
 import ScoreSheet from './ScoreSheet'
 import SearchBar from '../../Utility/SearchBar'
 import {
@@ -19,7 +19,7 @@ function Dashboard(props) {
     const navigator = useNavigate()
     const { id, round } = useParams()
     useEffect(() => {
-        const colRef = collection(db, "Events2")
+        const colRef = collection(db, "Events")
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
@@ -44,7 +44,7 @@ function Dashboard(props) {
 
             <div className="w-full px-5 relative  text-white pt-4 ">
                 <div className='flex pt-2 pb-1 justify-between items-start '>
-                    <div onClick={() => navigator('/events')}  className='flex hover:gap-4 gap-3 items-center transition-all hover:opacity-70 cursor-pointer'>
+                    <div onClick={() => navigator('/events')} className='flex hover:gap-4 gap-3 items-center transition-all hover:opacity-70 cursor-pointer'>
                         <IoIosArrowBack className='text-3xl ' />
                         <div className=''>
                             <h1 className='text-4xl capitalize '>{data.name}</h1>

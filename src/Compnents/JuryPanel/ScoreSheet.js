@@ -19,7 +19,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
     }))
     const [clickedPIds, setClickedPIds] = useState([])
-    
+
     const [partsModalOpen, setPartsModalOpen] = useState(false)
     const navigate = useNavigate()
     useEffect(() => {
@@ -36,9 +36,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
     }, [query])
 
-    
+
     const submitRound = async (id, rIndex) => {
-        const docRef = doc(db, 'Events2', id)
+        const docRef = doc(db, 'Events', id)
         const new_rounds = [...rounds]
         new_rounds[rIndex].completed = true
         await updateDoc(docRef, { rounds: new_rounds })
@@ -47,7 +47,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
 
     const submitWinners = async (id, winners) => {
-        const docRef = doc(db, 'Events2', id)
+        const docRef = doc(db, 'Events', id)
         await updateDoc(docRef, { winners: winners })
     }
     return (
@@ -159,7 +159,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                 rounds.length === parseInt(round) &&
                 <WinnerSelect winner={winners} completed={rounds[round - 1]?.completed} id={id} round={round} submitRound={submitRound} submitWinners={submitWinners} maxParticipants={maxParticipants} />
             }
-            {partsModalOpen  && <ParticipantsModal set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
+            {partsModalOpen && <ParticipantsModal set={partsModalOpen} onClose={() => setPartsModalOpen(false)} pIds={clickedPIds} />}
 
         </div>
     )
