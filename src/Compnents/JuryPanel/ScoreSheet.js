@@ -38,7 +38,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
 
     const submitRound = async (id, rIndex) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const new_rounds = [...rounds]
         new_rounds[rIndex].completed = true
         await updateDoc(docRef, { rounds: new_rounds })
@@ -47,7 +47,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
 
 
     const submitWinners = async (id, winners) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         await updateDoc(docRef, { winners: winners })
     }
     return (

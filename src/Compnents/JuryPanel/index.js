@@ -22,7 +22,7 @@ function Dashboard(props) {
     const { id, round } = useParams()
     const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round - 1].judges.uid)
     useEffect(() => {
-        const colRef = collection(db, "Events")
+        const colRef = collection(db, 'Events2')
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {

@@ -74,7 +74,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
         const q = query(collRef, where('pId', '==', pId))
         await getDocs(q).then((participantRef) => {
           participantRef.forEach((participant) => {
-            setRunners(prev => {
+            setWinners(prev => {
               if (prev.filter(p => p.pId === participant.data().pId).length > 0)
                 return prev
               return [...prev, { ...participant.data() }]

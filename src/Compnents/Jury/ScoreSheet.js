@@ -39,28 +39,28 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
         setCount(participants.filter((ele) => ele.rounds[round - 1].selected).length)
     })
     const selectParticipant = async (id, pIndex, rIndex, value) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.participants[pIndex].rounds[rIndex].selected = value
         await updateDoc(docRef, event)
     }
     const submitRound = async (id, rIndex) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].completed = true
         await updateDoc(docRef, event)
     }
     const deleteCriteria = async (id, rIndex) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].criteria.pop()
         await updateDoc(docRef, event)
     }
     const updateScore = async (id, pIndex, rIndex, uid, cIndex, score) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         const scores = event.participants[pIndex].rounds[rIndex].scores
@@ -84,7 +84,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants })
         await updateDoc(docRef, event)
     }
     const submitWinners = async (id, winners) => {
-        const docRef = doc(db, 'Events', id)
+        const docRef = doc(db, 'Events2', id)
         const eventDoc = await getDoc(docRef)
         await updateDoc(docRef, { winners: winners })
     }

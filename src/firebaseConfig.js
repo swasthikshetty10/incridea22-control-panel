@@ -37,7 +37,7 @@ enableIndexedDbPersistence(db)
 export async function getEvent(id) {
     const events = [];
 
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const q = query(collRef, where('id', '==', id))
     const eventRef = await getDocs(q);
     eventRef.forEach((event) => {
@@ -50,7 +50,7 @@ export async function getEvent(id) {
 }
 
 export async function getEvents(uid, role) {
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const q = query(collRef, where(`roles.${uid}`, "==", role))
     const querySnaphshot = await getDocs(q)
     const data = []
@@ -61,7 +61,7 @@ export async function getEvents(uid, role) {
 }
 
 export async function updateRound(eventName, pIds, roundIndex, roundObj) {
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const q = query(collRef, where('name', '==', eventName))
     const events = []
     const eventRef = await getDocs(q)
@@ -84,13 +84,13 @@ export async function updateRound(eventName, pIds, roundIndex, roundObj) {
     const participantIndex = event.participants.indexOf(participant)
     participant.rounds[roundIndex] = roundObj
     event.participants[participantIndex] = participant
-    const docRef = doc(db, 'Events', event.id)
+    const docRef = doc(db, 'Events2', event.id)
     delete event.id
     await updateDoc(docRef, event)
 }
 
 export async function select(eventName, set, roundIndex) {
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const q = query(collRef, where('name', '==', eventName))
     const events = []
     const eventRef = await getDocs(q)
@@ -115,7 +115,7 @@ export async function select(eventName, set, roundIndex) {
 
     }
     event.participants = participants
-    const docRef = doc(db, 'Events', event.id)
+    const docRef = doc(db, 'Events2', event.id)
     delete event.id
     await updateDoc(docRef, event)
 
@@ -125,7 +125,7 @@ export async function select(eventName, set, roundIndex) {
 export const auth = getAuth(app)
 
 export async function getAllEvents() {
-    const eventColRef = collection(db, 'Events')
+    const eventColRef = collection(db, 'Events2')
     const events = []
     const eventsRef = await getDocs(eventColRef)
     eventsRef.forEach((event) => {
@@ -162,7 +162,7 @@ export async function getOrganiser(uid) {
 
 export async function getWinners() {
     const winners = [];
-    const collRef = collection(db, 'Events')
+    const collRef = collection(db, 'Events2')
     const eventDocs = await getDocs(collRef)
     eventDocs.forEach((event) => {
         winners.push({ name: event.data().name, id: event.id, winner: event.data().winners, completed: event.data().completed })

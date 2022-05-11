@@ -30,7 +30,7 @@ function Dashboard(props) {
     }, [userCtx])
 
     useEffect(() => {
-        const colRef = collection(db, "Events")
+        const colRef = collection(db, 'Events2')
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {

@@ -18,7 +18,7 @@ function Dashboard(props) {
     const navigator = useNavigate()
     const { id, round } = useParams()
     useEffect(() => {
-        const colRef = collection(db, "Events")
+        const colRef = collection(db, 'Events2')
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
