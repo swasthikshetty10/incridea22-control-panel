@@ -5,7 +5,7 @@ import Modal from './Rounds/Modal'
 import Users from './Users'
 import SearchBar from '../../Utility/SearchBar'
 import Winners from './Winners'
-import {IoIosArrowBack} from 'react-icons/io'
+import { IoIosArrowBack } from 'react-icons/io'
 import {
     collection, onSnapshot
 } from 'firebase/firestore'
@@ -24,7 +24,7 @@ function Dashboard(props) {
     console.log(userCtx)
 
     useEffect(() => {
-        if(sha256(userCtx.currentUser.uid) === '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
+        if (sha256(userCtx.currentUser.uid) === '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
             navigator('/jury')
         }
     }, [userCtx])
@@ -66,8 +66,7 @@ function Dashboard(props) {
                         <LogoutBtn auth={auth} />
                     </div>
                 </div>
-                <div className='flex justify-between 
-             border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
+                <div className='flex justify-between border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
                     <Users events={data} participants={data.participants} />
                     {data.participants?.length && <Rounds query={query} participants={data.participants} />}
                     <Winners winners={data.winners} />

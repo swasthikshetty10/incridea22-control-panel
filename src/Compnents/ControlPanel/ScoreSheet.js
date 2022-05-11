@@ -75,11 +75,11 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
         if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
             const judgeIndex = participants[pIndex].rounds[rIndex].scores.findIndex(ele => ele.uid === uid)
             const len = scores[judgeIndex].criteria.length
-            scores[judgeIndex] = { ...scores[judgeIndex], criteria: rounds[round - 1].criteria.map((_, ix) => ix === cIndex ? parseInt(score) : (len > ix ? scores[judgeIndex].criteria[ix] : 0)) }
+            scores[judgeIndex] = { ...scores[judgeIndex], criteria: rounds[round - 1].criteria.map((_, ix) => ix === cIndex ? Number(score) : (len > ix ? scores[judgeIndex].criteria[ix] : 0)) }
             scores[judgeIndex].total = scores[judgeIndex].criteria.reduce((a, b) => a + b, 0)
             new_participants[pIndex].rounds[rIndex].scores = scores
         } else {
-            const criteria = rounds[round - 1].criteria.map((e, i) => i == cIndex ? parseInt(score) : 0)
+            const criteria = rounds[round - 1].criteria.map((e, i) => i == cIndex ? Number(score) : 0)
             const obj = {
                 uid,
                 criteria,

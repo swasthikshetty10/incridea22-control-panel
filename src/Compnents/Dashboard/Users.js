@@ -10,7 +10,6 @@ function Users({ participants, events }) {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const [selectedPIds, setSelectedPIds] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)
-
     const onConfirm = async (index) => {
         const docRef = doc(db, 'Events2', events.id)
         const new_participants = participants.filter(ele => ele.index != index).map((ele, ix) => { ele.index = ix; return ele })
@@ -29,26 +28,33 @@ function Users({ participants, events }) {
                     {
                         participants.map((obj, index) =>
                             <div key={index} className="group bg-gray-700 relative hover:bg-gray-500 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
-                                <div className='items-end grow flex flex-col  w-min '>
-                                    <div onClick={() => {
+                                <div className=' grow flex flex-col  w-min '>
+                                    {!events.rounds[0].completed && <div onClick={() => {
                                         setSelectedIndex(obj.index)
                                         setSelectedPIds(obj.pIds)
                                         setDeleteModalOpen(true)
-                                        }} className='hidden top-0 right-0 rounded-sm absolute group-hover:block bg-red-500 p-1 m-0 '>
+                                    }} className='hidden top-0 right-0 rounded-sm absolute group-hover:block bg-red-500 p-1 m-0 '>
                                         <AiOutlineDelete className='text-white text-2xl opacity-100' />
-                                    </div>
-                                    {obj.pIds.map((pid, index) => 
-                                    <div key={index} className='items-center bg-gray-500 whitespace-nowrap p-2 bg-opacity-20 inline-flex flex-nowrap my-1 justify-between w-full '>
-                                        {pid}
-                                    </div>
-                                    )}
+                                    </div>}
+                                    {obj.pIds.length > 4 ?
+                                        obj.teamName :
+                                        <div>
+                                            {obj.pIds.length > 1 && <span className='font-semibold capitalize text-blue-300'>{obj.teamName}</span>}
+                                            {
+                                                obj.pIds.map((pid, idx) =>
+                                                    <div key={`${idx}pId`} className='bg-gray-500 p-2 bg-opacity-20 inline-flex flex-nowrap whitespace-nowrap my-1 justify-center items-center w-full '>
+                                                        {pid}
+                                                    </div>)
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             </div>)}
 
                 </div>
             </div>
             {modal && <RegisterUser set={modal} onClose={() => { setModal(false) }} events={events} />}
-            {deleteModalOpen && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={onConfirm} pIds={selectedPIds} selectedIndex={selectedIndex} />}
+            {(deleteModalOpen && !events.rounds[0].completed) && <DeleteModal set={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={onConfirm} pIds={selectedPIds} selectedIndex={selectedIndex} />}
         </div>
     )
 }
