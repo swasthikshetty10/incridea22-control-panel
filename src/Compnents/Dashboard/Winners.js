@@ -28,6 +28,14 @@ function Round({ winners, disabled }) {
                                 </div>
                                 )}
                             </div>
+                            <div className='font-semibold text-xl text-center'>Second Runner Up</div>
+                            <div className='flex-col gap-3  w-full  '>
+
+                                {winners.secondRunner.map((pid, index) => pid && <div key={index} className='bg-gray-500 p-2 bg-opacity-20 inline-flex flex-nowrap my-1 justify-between w-full '>
+                                    <span className='whitespace-nowrap'>{pid}</span>
+                                </div>
+                                )}
+                            </div>
                         </>
                     }
 
