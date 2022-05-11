@@ -29,7 +29,7 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
                                 winner[ix] = e.target.value.toUpperCase()
                                 setWinners({ ...winners, winner })
                             }}
-                            value={ele} />
+                            value={ele || 'INC-2022-'} />
                     })
                 }
 
@@ -40,9 +40,9 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
                     winners.winner.map((ele, ix) => {
                         return <input disabled={completed} className='p-2 disabled:text-white' placeholder='enter runner PID' onChange={(e) => {
                             let runner = [...winners.runner]
-                            runner[ix] = e.target.value
+                            runner[ix] = e.target.value.toUpperCase()
                             setWinners({ ...winners, runner })
-                        }} value={winners.runner[ix].toUpperCase()} />
+                        }} value={winners.runner[ix] || 'INC-2022-'} />
                     })
                 }
 
@@ -53,9 +53,9 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
                     winners.secondRunner.map((ele, ix) => {
                         return <input disabled={completed} className='p-2 disabled:text-white' placeholder='enter runner PID' onChange={(e) => {
                             let secondRunner = [...winners.secondRunner]
-                            secondRunner[ix] = e.target.value
+                            secondRunner[ix] = e.target.value.toUpperCase()
                             setWinners({ ...winners, secondRunner })
-                        }} value={winners.secondRunner[ix].toUpperCase()} />
+                        }} value={winners.secondRunner[ix] || 'INC-2022-'} />
                     })
                 }
 

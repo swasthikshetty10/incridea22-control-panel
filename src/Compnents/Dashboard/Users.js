@@ -6,7 +6,7 @@ import { db } from '../../firebaseConfig'
 import { doc, updateDoc } from 'firebase/firestore'
 
 function Users({ participants, events }) {
-    const [modal, setModal] = useState(true)
+    const [modal, setModal] = useState(false)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const [selectedPIds, setSelectedPIds] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)

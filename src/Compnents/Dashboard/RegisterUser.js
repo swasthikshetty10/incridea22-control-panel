@@ -76,7 +76,9 @@ function RegisterModal({ set, onClose, events }) {
                         {Array.from(Array(events.maxParticipants).keys()).map((key) =>
                             <div className='flex flex-col items-start'>
                                 <label>{`Participant ${key + 1}`}</label>
-                                <input onChange={(e) => {
+                                <input 
+                                    defaultValue={'INC-2022-'}
+                                onChange={(e) => {
                                     setparticipant((prev) => {
                                         let new_pIds = [...prev.pIds]
                                         new_pIds[key] = e.target.value.toUpperCase().trim()
@@ -94,7 +96,7 @@ function RegisterModal({ set, onClose, events }) {
                             setLoading(true)
                             await submitHandler()
                             setLoading(false)
-                        }} disabled={loading} className='disabled:opacity-70 px-3 py-2 rounded-md border-2 hover:bg-green-600 border-green-500'>Submit</button>
+                        }} disabled={loading} className='disabled:opacity-70 px-3 py-2 rounded-md border-2 hover:bg-green-600 border-green-500'>{loading ? 'Submitting' : 'Submit'}</button>
 
                     </div>
                 </div>
