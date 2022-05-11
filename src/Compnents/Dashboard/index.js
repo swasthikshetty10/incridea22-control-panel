@@ -37,6 +37,7 @@ function Dashboard(props) {
                     if (doc.id === id) {
                         console.log(doc.data().participants)
                         setData({ ...doc.data(), id: doc.id })
+                        console.log(doc.data());
                         setLoading(false)
                         return
                     }
@@ -50,6 +51,7 @@ function Dashboard(props) {
         }
 
     }, [])
+
     return (<>
         {loading ? <div>Loading</div> :
 
@@ -67,7 +69,7 @@ function Dashboard(props) {
                 <div className='flex justify-between 
              border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800'>
                     <Users events={data} participants={data.participants} />
-                    <Rounds query={query} participants={data.participants} />
+                    {data.participants?.length && <Rounds query={query} participants={data.participants} />}
                     <Winners winners={data.winners} />
                 </div>
                 <Modal />

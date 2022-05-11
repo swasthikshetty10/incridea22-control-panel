@@ -27,7 +27,6 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
   })() : "")
   useEffect(() => {
     if (isJudge) {
-
       setTyping(true)
       const delayDebounceFn = setTimeout(() => {
         console.log(comment)
