@@ -40,7 +40,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
 
 
   const updateComment = async (participants) => {
-    const docRef = doc(db, 'Events', id)
+    const docRef = doc(db, 'Events2', id)
     const new_participants = [...participants]
     const scores = new_participants[pIndex].rounds[rIndex].scores
     if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
