@@ -13,22 +13,29 @@ import { db } from '../../firebaseConfig'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Context/AuthContext'
 import LogoutBtn from '../../Utility/LogoutBtn'
+import { sha256 } from 'js-sha256'
 function Dashboard(props) {
     const [query, setQuery] = useState("");
-    const eventName = "capture the flag"
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id } = useParams()
     console.log(userCtx)
+
+    useEffect(() => {
+        if(sha256(userCtx.currentUser.uid) === '631c81c139014f8696e0948ffcd88ab8a7ea06a1984a9f3f6b4f88740f7ac959') {
+            navigator('/jury')
+        }
+    }, [userCtx])
+
     useEffect(() => {
         const colRef = collection(db, "Events2")
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === id) {
-                        console.log(doc.id)
+                        console.log(doc.data().participants)
                         setData({ ...doc.data(), id: doc.id })
                         setLoading(false)
                         return
