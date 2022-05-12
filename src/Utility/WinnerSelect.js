@@ -6,11 +6,11 @@ function WinnerSelect({ id, round, maxParticipants, completed, completedWinners 
     const [winners, setWinners] = useState(completed ? completedWinners : { winner: new Array(maxParticipants).fill(""), runner: new Array(maxParticipants).fill(""), secondRunner: new Array(maxParticipants).fill("") })
     const [submit, setSubmit] = useState(false)
     const submitWinners = async (id) => {
-        const docRef = doc(db, 'Events2', id)
+        const docRef = doc(db, 'Events', id)
         await updateDoc(docRef, { winners: winners })
     }
     const submitRound = async (id, rIndex) => {
-        const docRef = doc(db, 'Events2', id)
+        const docRef = doc(db, 'Events', id)
         const eventDoc = await getDoc(docRef)
         const event = { ...eventDoc.data() }
         event.rounds[rIndex].completed = true

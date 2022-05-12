@@ -40,7 +40,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
 
 
   const updateComment = async (participants) => {
-    const docRef = doc(db, 'Events2', id)
+    const docRef = doc(db, 'Events', id)
     const new_participants = [...participants]
     const scores = new_participants[pIndex].rounds[rIndex].scores
     if (participants[pIndex].rounds[rIndex].scores.some((item) => item.uid === uid)) {
@@ -82,7 +82,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
           })
         })
       }
-      for (const pId of pIds.runner) {      
+      for (const pId of pIds.runner) {
         const q = query(collRef, where('pId', '==', pId))
         await getDocs(q).then((participantRef) => {
           participantRef.forEach((participant) => {
@@ -94,7 +94,7 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
           })
         })
       }
-      for (const pId of pIds.secondRunner) {      
+      for (const pId of pIds.secondRunner) {
         const q = query(collRef, where('pId', '==', pId))
         await getDocs(q).then((participantRef) => {
           participantRef.forEach((participant) => {
@@ -263,14 +263,14 @@ function ParticipantsModal({ isWinners, pIndex, rIndex, uid, id, round, rounds, 
               <div className='h-[70vh] flex justify-center items-center'>
                 <AiOutlineLoading3Quarters className='animate-spin text-4xl text-white' />
               </div>}
-              <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
-                        <button
-                          onClick={onClose}
-                          className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
-                        >
-                          Close
-                        </button>
-                      </div>
+            <div className='flex py-3 gap-3 mt-3 bg-gray-800 border-gray-600 border-t justify-end '>
+              <button
+                onClick={onClose}
+                className='px-4 mr-4 py-2 border-2 border-red-600 hover:bg-red-600 transition-colors hover:border-red-600/75  rounded-md'
+              >
+                Close
+              </button>
+            </div>
 
           </div>
         </div>

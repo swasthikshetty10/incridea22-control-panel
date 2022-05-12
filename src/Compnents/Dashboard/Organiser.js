@@ -20,7 +20,7 @@ function Dashboard(props) {
     const { id } = useParams()
     console.log(userCtx)
     useEffect(() => {
-        const colRef = collection(db, 'Events2')
+        const colRef = collection(db, 'Events')
         //real time update
         if (userCtx) {
             onSnapshot(colRef, (snapshot) => {
