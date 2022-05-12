@@ -20,7 +20,7 @@ function Dashboard(props) {
     const userCtx = useContext(AuthContext)
     const navigator = useNavigate()
     const { id, round } = useParams()
-    const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round - 1].judges.uid)
+    const [selectedJudge, setSelectedJudge] = useState(data?.rounds[round - 1].judges[0].uid)
     useEffect(() => {
         const colRef = collection(db, 'Events2')
         if (userCtx) {
@@ -35,6 +35,7 @@ function Dashboard(props) {
                 })
             }
             )
+            setSelectedJudge(data?.rounds[round - 1].judges[0].uid)
 
         }
         else {

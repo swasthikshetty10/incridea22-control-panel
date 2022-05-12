@@ -113,9 +113,11 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                                                 let score = 0
                                                                 if (participants[obj.index].rounds[round - 1].scores.length > 0) {
                                                                     participants[obj.index].rounds[round - 1].scores.forEach((ele, i) => {
+                                                                        console.log(ele.uid, uid)
                                                                         if (ele.uid === uid) {
                                                                             score = participants[obj.index].rounds[round - 1].scores[i].criteria[ix]
                                                                         }
+                                                                        console.log(participants[obj.index].rounds[round - 1].scores[i].criteria[ix])
 
                                                                     })
                                                                     return score
