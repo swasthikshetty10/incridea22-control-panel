@@ -94,12 +94,12 @@ function WinnersList() {
           </>
         )}
       </div>
-      <ParticipantsModal
+      {modalOpen && <ParticipantsModal
         isWinners
         onClose={() => setModalOpen(false)}
         set={modalOpen}
         pIds={clickedPIds}
-      />
+      />}
     </div>
   )
 }
