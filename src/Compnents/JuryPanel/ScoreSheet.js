@@ -80,7 +80,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                     </div>
                                 }
 
-                                <div className={`  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-8`} key={`${index}cp`}>
+                                <div className={`  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-gray-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-8`} key={`${index}cp`}>
                                     <div onClick={() => { setClickedPIds(obj.pIds); setPartsModalOpen(true) }} className="md:basis-1/4 bg-gray-300 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                         <div className='flex-col gap-3 w-full  '>
                                             <div className=' bg-gray-200 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>

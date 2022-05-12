@@ -28,6 +28,7 @@ function Dashboard(props) {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === id) {
                         console.log(doc.id)
+                        setSelectedJudge(doc.data().data.rounds[round - 1].judges[0].uid)
                         setData({ ...doc.data(), id: doc.id })
                         setLoading(false)
                         return
@@ -35,7 +36,6 @@ function Dashboard(props) {
                 })
             }
             )
-            setSelectedJudge(data?.rounds[round - 1].judges[0].uid)
 
         }
         else {
