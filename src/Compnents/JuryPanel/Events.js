@@ -43,7 +43,7 @@ function Events() {
         }
     }, [])
     return (
-        <div className='min-h-screen bg-gray-700 text-white pt-3'  >
+        <div className='min-h-screen bg-white text-black pt-3'  >
             <div className='flex gap-10 items-center justify-center'>
                 <h1 className='text-center text-3xl'>
                     All Events
@@ -58,7 +58,7 @@ function Events() {
                                 setRounds(ele.rounds.map((e, i) => ({ ...e, round: i + 1, id: ele.id })));
                                 setModal(true)
 
-                            }} key={key} className='p-3 text-2xl bg-black hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
+                            }} key={key} className='p-3 text-2xl bg-gray-400 hover:bg-opacity-40  cursor-pointer rounded-lg my-2  bg-opacity-30'>
                                 <span>
                                     {ele.name}
                                 </span>

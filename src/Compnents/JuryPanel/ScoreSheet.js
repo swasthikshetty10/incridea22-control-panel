@@ -52,14 +52,14 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
     }
     return (
         <div className='flex justify-center item-center overflow-hidden'>
-            <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden shadow-md  shadow-gray-800 '>
+            <div className='h-full transformease-linear duration-300 text-center w-fit border-2 border-opacity-40 border-gray-300 overflow-hidden  '>
                 <div className='pb-2'>
-                    <div className={` h-[75vh] tablescroll   overflow-y-scroll  w-full`}>
+                    <div className={` h-[75vh] tablescroll bg-white  overflow-y-auto  w-full`}>
                         {roundParticipants.length ?
 
                             roundParticipants.map((obj, index) => <>
                                 {
-                                    index == 0 && <div className={`${true && 'pointer-events-none'} flex sticky  top-0 bg-gray-900/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`k${index}participant`}>
+                                    index == 0 && <div className={`${true && 'pointer-events-none'} flex sticky  top-0 bg-gray-100/90 backdrop-blur z-[100] flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-5`} key={`k${index}participant`}>
                                         <div className="md:basis-1/3 transform ease-in-out duration-50 bg-opacity-90 m-2  px-2 py-1 flex justify-between ">
 
                                             <div className='text-2xl grow  font-semibold  px-4 bg-opacity-20  my-1 justify-between w-full '>
@@ -81,9 +81,9 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                 }
 
                                 <div className={`  ${participants[obj.index]?.rounds[round - 1]?.selected && 'bg-green-500 bg-opacity-70'} flex flex-col md:flex-row  border-b-[1.5px] border-gray-300/40 items-center justify-start gap-8`} key={`${index}cp`}>
-                                    <div onClick={() => { setClickedPIds(obj.pIds); setPartsModalOpen(true) }} className="md:basis-1/4 bg-gray-700 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
+                                    <div onClick={() => { setClickedPIds(obj.pIds); setPartsModalOpen(true) }} className="md:basis-1/4 bg-gray-300 hover:bg-opacity-50 cursor-pointer transform ease-in-out duration-50 bg-opacity-90 m-2 mx-6 px-2 py-1 flex justify-between ">
                                         <div className='flex-col gap-3 w-full  '>
-                                            <div className=' bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                            <div className=' bg-gray-200 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
                                                 {
                                                     obj.pIds.length > 4 ?
                                                         obj.teamName :
@@ -91,7 +91,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                                             {obj.pIds.length > 1 && <span className='font-semibold capitalize text-blue-300'>{obj.teamName}</span>}
                                                             {
                                                                 obj.pIds.map((pid, idx) =>
-                                                                    <div key={`${idx}pId`} className='bg-gray-500 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
+                                                                    <div key={`${idx}pId`} className='bg-gray-100 p-2 px-5 bg-opacity-20 whitespace-nowrap my-1 justify-between w-full '>
                                                                         {pid}
                                                                     </div>)
                                                             }
@@ -105,7 +105,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                     {
                                         rounds[round - 1].criteria.map((name, ix) =>
 
-                                            <div key={`criteria${ix}`} className='md:basis-1/7 p-3 bg-gray-700'>
+                                            <div key={`criteria${ix}`} className='md:basis-1/7 p-3 bg-gray-200'>
                                                 <div className='w-14 py-2'>
                                                     {
                                                         (() => {
@@ -128,7 +128,7 @@ function Users({ query, participants, round, rounds, id, uid, maxParticipants, w
                                             </div>)
                                     }
                                     <div className={` select-none   inline-flex mr-3 gap-1   hover:bg-opacity-50 transform ease-in-out duration-300 bg-opacity-90 justify-center items-center py-4`}>
-                                        <span className='py-4 px-5 bg-gray-700 w-16'>{
+                                        <span className='py-4 px-5 bg-gray-200 w-16'>{
                                             (() => {
                                                 try {
                                                     return participants[obj.index].rounds[round - 1].scores.find(ele => ele.uid === uid).total

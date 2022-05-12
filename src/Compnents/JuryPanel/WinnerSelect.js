@@ -9,10 +9,10 @@ function WinnerSelect({ id, round, maxParticipants, completed, winner}) {
     return (
         <div className={`p-3 border-2 border-l-0 border-opacity-40 border-gray-300 ${completed &&  'opacity-50'} `}>
             <div className='text-black flex flex-col gap-2 w-44 '>
-                <div className='text-xl text-white gap-4 font-bold capitalize text-center'> Winners</div>
+                <div className='text-xl text-black gap-4 font-bold capitalize text-center'> Winners</div>
                 {
                     winners.winner?.map((ele, ix) => {
-                        return <div key={ix} className='text-white p-2 min-h-[38px] w-full rounded-md bg-gray-600 mb-2 '>
+                        return <div key={ix} className='text-black p-2 min-h-[38px] w-full rounded-md bg-gray-200 mb-2 '>
 													{ele}
 													</div>
                          
@@ -21,10 +21,10 @@ function WinnerSelect({ id, round, maxParticipants, completed, winner}) {
 
             </div>
             <div className='text-black flex mt-3 flex-col gap-2 w-44 '>
-                <div className='text-xl text-white   gap-4  font-bold capitalize text-center'> Runners</div>
+                <div className='text-xl text-black   gap-4  font-bold capitalize text-center'> Runners</div>
                 {
                     winners.runner?.map((ele, ix) => {
-											return <div key={ix} className='text-white p-2 min-h-[38px] w-full rounded-md bg-gray-600 mb-2'>
+											return <div key={ix} className='text-black p-2 min-h-[38px] w-full rounded-md bg-gray-200 mb-2'>
 												{ele}
 												</div>
                     })
@@ -32,10 +32,10 @@ function WinnerSelect({ id, round, maxParticipants, completed, winner}) {
 
             </div>
             <div className='text-black flex mt-3 flex-col gap-2 w-44 '>
-                <div className='text-xl text-white   gap-4  font-bold capitalize text-center'> Second Runners</div>
+                <div className='text-xl text-black   gap-4  font-bold capitalize text-center'> Second Runners</div>
                 {
                     winners.secondRunner?.map((ele, ix) => {
-											return <div key={ix} className='text-white p-2 min-h-[38px] w-full rounded-md bg-gray-600 mb-2'>
+											return <div key={ix} className='text-black p-2 min-h-[38px] w-full rounded-md bg-gray-200 mb-2'>
 												{ele}
 												</div>
                     })
