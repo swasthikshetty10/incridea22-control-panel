@@ -12,7 +12,7 @@ function SignIn({ providers }) {
     const [error, setError] = useState('')
     const userCtx = useContext(AuthContext)
     const handleChange = (e) => {
-        if(error) setError('')
+        if (error) setError('')
         updateFormData({
             ...formData, [e.target.name]: e.target.value.trim(),
         });
@@ -45,18 +45,18 @@ function SignIn({ providers }) {
                         <h1 className="mb-8 text-3xl font-semibold text-center">Log In</h1>
                         <input
                             type="email"
-                            className="block border dark:text-black  focus:outline-none border-gray-light focus:border-green-500 w-full p-3 rounded mb-4"
+                            className="block border text-black  focus:outline-none border-gray-light focus:border-green-500 w-full p-3 rounded mb-4"
                             name="email"
                             onChange={handleChange}
                             placeholder="Email" required />
 
                         <input
                             type="password"
-                            className="block bg-opacity-10 dark:text-black border focus:outline-none border-gray-light focus:border-green-500 w-full p-3 rounded mb-4"
+                            className="block bg-opacity-10 text-black border focus:outline-none border-gray-light focus:border-green-500 w-full p-3 rounded mb-4"
                             name="password"
                             onChange={handleChange}
                             placeholder="Password" required />
-                       <div className="text-center -mt-1 mb-2"><span className="text-red-500 " >
+                        <div className="text-center -mt-1 mb-2"><span className="text-red-500 " >
                             {error}
                         </span></div>
 
