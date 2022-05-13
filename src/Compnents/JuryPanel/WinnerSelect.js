@@ -7,7 +7,7 @@ function WinnerSelect({ id, round, maxParticipants, completed, winner}) {
 
     console.log(winners)
     return (
-        <div className={`p-3 border-2 border-l-0 border-opacity-40 border-gray-300 ${completed &&  'opacity-50'} `}>
+        <div className={`p-3 border-2 border-l-0 border-opacity-40 border-gray-300 `}>
             <div className='text-black flex flex-col gap-2 w-44 '>
                 <div className='text-xl text-black gap-4 font-bold capitalize text-center'> Winners</div>
                 {
